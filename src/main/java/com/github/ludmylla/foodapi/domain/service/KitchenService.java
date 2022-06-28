@@ -2,6 +2,7 @@ package com.github.ludmylla.foodapi.domain.service;
 
 import com.github.ludmylla.foodapi.domain.exceptions.EntityInUseException;
 import com.github.ludmylla.foodapi.domain.exceptions.EntityNotFoundException;
+import com.github.ludmylla.foodapi.domain.exceptions.KitchenNotFoundException;
 import com.github.ludmylla.foodapi.domain.model.Kitchen;
 import com.github.ludmylla.foodapi.domain.repository.KitchenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ import java.util.List;
 
 @Service
 public class KitchenService {
+
+    private static final String MSG_KITCHEN_IN_USE= "Code kitchen %d cannot be deleted because it is in use.";
 
     @Autowired
     private KitchenRepository kitchenRepository;
@@ -27,7 +30,7 @@ public class KitchenService {
 
     public Kitchen findById(Long id){
         return kitchenRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Kitchen does not exist."));
+                .orElseThrow(() -> new KitchenNotFoundException(id));
     }
 
     public Kitchen update(Kitchen kitchen, Long id){
@@ -41,9 +44,9 @@ public class KitchenService {
             Kitchen kitchenActual = findById(id);
             kitchenRepository.deleteById(id);
         }catch (EmptyResultDataAccessException e){
-            throw new EntityNotFoundException("Entity not found");
+            throw new KitchenNotFoundException(id);
         }catch (DataIntegrityViolationException ex){
-            throw new EntityInUseException(String.format("Code kitchen %d cannot be deleted because it is in use.",id));
+            throw new EntityInUseException(String.format(MSG_KITCHEN_IN_USE,id));
         }
     }
 }

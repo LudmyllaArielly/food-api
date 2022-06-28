@@ -1,15 +1,20 @@
 package com.github.ludmylla.foodapi.domain.service;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.ludmylla.foodapi.domain.exceptions.EntityNotFoundException;
+import com.github.ludmylla.foodapi.domain.exceptions.RestaurantNofFoundException;
 import com.github.ludmylla.foodapi.domain.model.Kitchen;
 import com.github.ludmylla.foodapi.domain.model.Restaurant;
 import com.github.ludmylla.foodapi.domain.repository.RestaurantRepository;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Field;
 import java.util.Comparator;
 import java.util.List;
@@ -38,7 +43,7 @@ public class RestaurantService {
 
     public Restaurant findById(Long id){
         return restaurantRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Restaurant does not exist."));
+                .orElseThrow(() -> new RestaurantNofFoundException(id));
     }
 
     public Restaurant update(Long id, Restaurant restaurant){
@@ -50,9 +55,9 @@ public class RestaurantService {
         return restaurantRepository.save(restaurant);
     }
 
-    public Restaurant partialUpdate(Long id, Map<String, Object> fields){
+    public Restaurant partialUpdate(Long id, Map<String, Object> fields, HttpServletRequest request){
         Restaurant restaurantActual =  findById(id);
-        merge(fields, restaurantActual);
+        merge(fields, restaurantActual,request);
         return update(id, restaurantActual);
     }
 
@@ -63,20 +68,32 @@ public class RestaurantService {
         return restaurant;
     }
 
-    private void merge(Map<String, Object> fields, Restaurant restaurantDestiny) {
-        ObjectMapper objectMapper = new ObjectMapper();
+    private void merge(Map<String, Object> fields, Restaurant restaurantDestiny,HttpServletRequest request) {
+        ServletServerHttpRequest servletServerHttpRequest = new ServletServerHttpRequest(request);
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            throwExceptionWhenCreatingAnAttributeThatDoesExistOrIsIgnoredInJson(objectMapper);
 
-        // Convertendo instancia com base no fields
-        Restaurant restaurantOrigin = objectMapper.convertValue(fields, Restaurant.class);
+            // Convertendo instancia com base no fields
+            Restaurant restaurantOrigin = objectMapper.convertValue(fields, Restaurant.class);
 
-        fields.forEach((nameProperty, valueProperty) -> {
-            Field field = ReflectionUtils.findField(Restaurant.class, nameProperty);
-            field.setAccessible(true); // torna variavel acessivel
+            fields.forEach((nameProperty, valueProperty) -> {
+                Field field = ReflectionUtils.findField(Restaurant.class, nameProperty);
+                field.setAccessible(true); // torna variavel acessivel
 
-            Object newValue = ReflectionUtils.getField(field,restaurantOrigin);
+                Object newValue = ReflectionUtils.getField(field, restaurantOrigin);
 
-            ReflectionUtils.setField(field, restaurantDestiny, newValue);
+                ReflectionUtils.setField(field, restaurantDestiny, newValue);
 
-        });
+            });
+        }catch (IllegalArgumentException e){
+            Throwable rootCause = ExceptionUtils.getRootCause(e);
+            throw new HttpMessageNotReadableException(e.getMessage(), rootCause, servletServerHttpRequest);
+        }
+    }
+
+    private void throwExceptionWhenCreatingAnAttributeThatDoesExistOrIsIgnoredInJson (ObjectMapper objectMapper) {
+        objectMapper.configure(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES, true);
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
     }
 }

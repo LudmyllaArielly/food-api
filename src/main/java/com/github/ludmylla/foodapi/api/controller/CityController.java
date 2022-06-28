@@ -1,7 +1,7 @@
 package com.github.ludmylla.foodapi.api.controller;
 
-import com.github.ludmylla.foodapi.domain.exceptions.EntityInUseException;
-import com.github.ludmylla.foodapi.domain.exceptions.EntityNotFoundException;
+import com.github.ludmylla.foodapi.domain.exceptions.BusinessException;
+import com.github.ludmylla.foodapi.domain.exceptions.StateNotFoundException;
 import com.github.ludmylla.foodapi.domain.model.City;
 import com.github.ludmylla.foodapi.domain.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +20,12 @@ public class CityController {
 
     @PostMapping
     public ResponseEntity<City> create(@RequestBody City city){
-        city = cityService.create(city);
-        return ResponseEntity.status(HttpStatus.CREATED).body(city);
+        try {
+            city = cityService.create(city);
+            return ResponseEntity.status(HttpStatus.CREATED).body(city);
+        }catch (StateNotFoundException e){
+            throw new BusinessException(e.getMessage(), e);
+        }
     }
 
     @GetMapping
@@ -30,23 +34,27 @@ public class CityController {
         return ResponseEntity.ok(list);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<City> findById(@PathVariable Long id){
+        City city = cityService.findById(id);
+        return ResponseEntity.ok(city);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<City> update(@PathVariable Long id ,@RequestBody City city){
-        city = cityService.update(id, city);
-        return ResponseEntity.ok(city);
+        try {
+            city = cityService.update(id, city);
+            return ResponseEntity.ok(city);
+        }catch (StateNotFoundException e){
+            throw new BusinessException(e.getMessage(), e);
+        }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id){
-        try {
-            cityService.delete(id);
-            return ResponseEntity.noContent().build();
-
-        } catch (EntityNotFoundException e){
-            return ResponseEntity.notFound().build();
-
-        }catch (EntityInUseException e){
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
-        }
+        cityService.delete(id);
+        return ResponseEntity.noContent().build();
     }
+
+
 }

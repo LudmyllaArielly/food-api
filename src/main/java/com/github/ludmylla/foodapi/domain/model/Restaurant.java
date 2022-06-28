@@ -35,9 +35,8 @@ public class Restaurant {
     @Column(columnDefinition = "datetime")
     private LocalDateTime updateDate;
 
-    //@JsonIgnore
     //@JsonIgnoreProperties("hibernateLazyInitializer")
-    @ManyToOne //(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "kitchen_id", nullable = false)
     private Kitchen kitchen;
 
@@ -45,7 +44,6 @@ public class Restaurant {
     @Embedded
     private Address address;
 
-    //@JsonIgnore
     @ManyToMany
     @JoinTable(name = "restaurant_form_of_payment",
     joinColumns = @JoinColumn(name = "restaurant_id"),

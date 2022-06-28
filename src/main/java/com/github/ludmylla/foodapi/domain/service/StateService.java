@@ -1,7 +1,7 @@
 package com.github.ludmylla.foodapi.domain.service;
 
 import com.github.ludmylla.foodapi.domain.exceptions.EntityInUseException;
-import com.github.ludmylla.foodapi.domain.exceptions.EntityNotFoundException;
+import com.github.ludmylla.foodapi.domain.exceptions.StateNotFoundException;
 import com.github.ludmylla.foodapi.domain.model.State;
 import com.github.ludmylla.foodapi.domain.repository.StateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +13,8 @@ import java.util.List;
 
 @Service
 public class StateService {
+
+    private static final String MSG_STATE_IN_USE = "Code state %d cannot be deleted because it is in use.";
 
     @Autowired
     private StateRepository stateRepository;
@@ -27,7 +29,7 @@ public class StateService {
 
     public State findById(Long id){
         return stateRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("State does not exist."));
+                .orElseThrow(() -> new StateNotFoundException(id));
     }
 
     public State update(Long id, State state){
@@ -41,9 +43,9 @@ public class StateService {
            State stateActual = findById(id);
            stateRepository.deleteById(id);
        }catch (EmptyResultDataAccessException e){
-           throw new EntityNotFoundException("State not found");
+           throw new StateNotFoundException(id);
        }catch (DataIntegrityViolationException ex){
-           throw new EntityInUseException(String.format("Code state %d cannot be deleted because it is in use.",id));
+           throw new EntityInUseException(String.format(MSG_STATE_IN_USE,id));
        }
     }
 

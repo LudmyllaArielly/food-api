@@ -1,7 +1,5 @@
 package com.github.ludmylla.foodapi.api.controller;
 
-import com.github.ludmylla.foodapi.domain.exceptions.EntityInUseException;
-import com.github.ludmylla.foodapi.domain.exceptions.EntityNotFoundException;
 import com.github.ludmylla.foodapi.domain.model.State;
 import com.github.ludmylla.foodapi.domain.service.StateService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +28,13 @@ public class StateController {
         return ResponseEntity.ok(list);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<State> findById(@PathVariable Long id){
+        State state = stateService.findById(id);
+        return ResponseEntity.ok(state);
+    }
+
+
     @PutMapping("/{id}")
     public ResponseEntity<State> update(@PathVariable Long id ,@RequestBody State state){
         state = stateService.update(id, state);
@@ -38,15 +43,8 @@ public class StateController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id){
-        try {
-            stateService.delete(id);
-            return ResponseEntity.noContent().build();
-
-        } catch (EntityNotFoundException e){
-            return ResponseEntity.notFound().build();
-
-        }catch (EntityInUseException e){
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
-        }
+        stateService.delete(id);
+        return ResponseEntity.noContent().build();
     }
+
 }

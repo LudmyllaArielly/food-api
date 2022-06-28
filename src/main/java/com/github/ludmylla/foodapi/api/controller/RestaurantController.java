@@ -1,5 +1,6 @@
 package com.github.ludmylla.foodapi.api.controller;
 
+import com.github.ludmylla.foodapi.domain.exceptions.BusinessException;
 import com.github.ludmylla.foodapi.domain.exceptions.EntityNotFoundException;
 import com.github.ludmylla.foodapi.domain.model.Restaurant;
 import com.github.ludmylla.foodapi.domain.service.RestaurantService;
@@ -8,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -20,11 +22,11 @@ public class RestaurantController {
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody Restaurant restaurant){
+       Restaurant restaurantCreate = restaurantService.create(restaurant);
        try {
-           restaurant = restaurantService.create(restaurant);
-           return ResponseEntity.status(HttpStatus.CREATED).body(restaurant);
+           return ResponseEntity.status(HttpStatus.CREATED).body(restaurantCreate);
        }catch (EntityNotFoundException e){
-           return ResponseEntity.badRequest().body(e.getMessage());
+           throw new BusinessException(e.getMessage());
        }
     }
 
@@ -46,13 +48,13 @@ public class RestaurantController {
             Restaurant restaurantUpdate = restaurantService.update(id, restaurant);
             return ResponseEntity.ok().body(restaurant);
         }catch (EntityNotFoundException e){
-            return ResponseEntity.badRequest().body(e.getMessage());
+            throw new BusinessException(e.getMessage());
         }
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<?> partialUpdate(@PathVariable Long id, @RequestBody Map<String, Object> fields){
-        Restaurant restaurant = restaurantService.partialUpdate(id, fields);
+    public ResponseEntity<?> partialUpdate(@PathVariable Long id, @RequestBody Map<String, Object> fields, HttpServletRequest request){
+        Restaurant restaurant = restaurantService.partialUpdate(id, fields, request);
         return ResponseEntity.ok(restaurant);
     }
 

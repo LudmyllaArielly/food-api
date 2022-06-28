@@ -1,7 +1,5 @@
 package com.github.ludmylla.foodapi.api.controller;
 
-import com.github.ludmylla.foodapi.domain.exceptions.EntityInUseException;
-import com.github.ludmylla.foodapi.domain.exceptions.EntityNotFoundException;
 import com.github.ludmylla.foodapi.domain.model.Kitchen;
 import com.github.ludmylla.foodapi.domain.service.KitchenService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,16 +43,8 @@ public class KitchenController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id){
-        try {
-            service.delete(id);
-            return ResponseEntity.noContent().build();
-
-        } catch (EntityNotFoundException e){
-                return ResponseEntity.notFound().build();
-
-        }catch (EntityInUseException e){
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
-        }
+        service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 
 }
