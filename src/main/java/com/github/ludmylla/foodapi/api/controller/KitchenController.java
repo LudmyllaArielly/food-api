@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -18,7 +19,7 @@ public class KitchenController {
     private KitchenService service;
 
     @PostMapping
-    public ResponseEntity<Kitchen> create(@RequestBody Kitchen kitchen){
+    public ResponseEntity<Kitchen> create(@RequestBody @Valid Kitchen kitchen){
         Kitchen kitchens = service.create(kitchen);
         return ResponseEntity.status(HttpStatus.CREATED).body(kitchens);
     }
@@ -36,7 +37,7 @@ public class KitchenController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Kitchen> update(@PathVariable Long id, @RequestBody Kitchen kitchen){
+    public ResponseEntity<Kitchen> update(@PathVariable Long id, @RequestBody @Valid Kitchen kitchen){
         Kitchen kitchenUpdate = service.update(kitchen,id);
         return ResponseEntity.ok(kitchenUpdate);
     }

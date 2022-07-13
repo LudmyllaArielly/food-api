@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -17,7 +18,7 @@ public class StateController {
     private StateService stateService;
 
     @PostMapping
-    public ResponseEntity<State> create(@RequestBody State state){
+    public ResponseEntity<State> create(@RequestBody @Valid State state){
         state = stateService.create(state);
         return ResponseEntity.status(HttpStatus.CREATED).body(state);
     }
@@ -36,7 +37,7 @@ public class StateController {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<State> update(@PathVariable Long id ,@RequestBody State state){
+    public ResponseEntity<State> update(@PathVariable Long id ,@RequestBody @Valid State state){
         state = stateService.update(id, state);
         return ResponseEntity.ok(state);
     }

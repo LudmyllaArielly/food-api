@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +22,7 @@ public class RestaurantController {
     private RestaurantService restaurantService;
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody Restaurant restaurant){
+    public ResponseEntity<?> create(@RequestBody @Valid Restaurant restaurant){
        Restaurant restaurantCreate = restaurantService.create(restaurant);
        try {
            return ResponseEntity.status(HttpStatus.CREATED).body(restaurantCreate);
@@ -43,7 +44,7 @@ public class RestaurantController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Restaurant restaurant){
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid Restaurant restaurant){
         try {
             Restaurant restaurantUpdate = restaurantService.update(id, restaurant);
             return ResponseEntity.ok().body(restaurant);

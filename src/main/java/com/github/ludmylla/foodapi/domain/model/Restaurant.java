@@ -1,18 +1,27 @@
 package com.github.ludmylla.foodapi.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.ludmylla.foodapi.core.validation.FreightRate;
+import com.github.ludmylla.foodapi.core.validation.Groups;
+import com.github.ludmylla.foodapi.core.validation.Multiple;
+import com.github.ludmylla.foodapi.core.validation.ZeroValueIncludeDescription;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.groups.ConvertGroup;
+import javax.validation.groups.Default;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@ZeroValueIncludeDescription(valueField = "freightRate", descriptionField= "name", descriptionRequired= "Freight rate free")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Data
 @Entity
@@ -22,7 +31,14 @@ public class Restaurant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank
     private String name;
+
+    @NotNull
+    //@PositiveOrZero
+    @Multiple(number = 5)
+    @FreightRate
     private BigDecimal freightRate;
 
     @JsonIgnore
@@ -35,7 +51,18 @@ public class Restaurant {
     @Column(columnDefinition = "datetime")
     private LocalDateTime updateDate;
 
-    //@JsonIgnoreProperties("hibernateLazyInitializer")
+    /*
+    * @Valid valida as propriedades de cozinha
+    *
+    * @ConvertGroup diz que quando for valida a cozinha
+    * ao inves de usa o default, use o groups.createRestaurant.class
+    *
+    * //@JsonIgnoreProperties("hibernateLazyInitializer")
+    * */
+
+    @Valid
+    @ConvertGroup(from = Default.class, to = Groups.KitchenId.class)
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "kitchen_id", nullable = false)
     private Kitchen kitchen;
