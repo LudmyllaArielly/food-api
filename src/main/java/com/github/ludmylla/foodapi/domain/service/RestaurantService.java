@@ -2,6 +2,7 @@ package com.github.ludmylla.foodapi.domain.service;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.ludmylla.foodapi.core.validation.ValidationException;
 import com.github.ludmylla.foodapi.domain.exceptions.RestaurantNofFoundException;
 import com.github.ludmylla.foodapi.domain.model.Kitchen;
 import com.github.ludmylla.foodapi.domain.model.Restaurant;
@@ -13,6 +14,8 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.SmartValidator;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Field;
@@ -29,6 +32,9 @@ public class RestaurantService {
 
     @Autowired
     private KitchenService kitchenService;
+
+    @Autowired
+    private SmartValidator smartValidator;
 
     public Restaurant create(Restaurant restaurant){
         verifyIfKitchenExist(restaurant);
@@ -58,7 +64,19 @@ public class RestaurantService {
     public Restaurant partialUpdate(Long id, Map<String, Object> fields, HttpServletRequest request){
         Restaurant restaurantActual =  findById(id);
         merge(fields, restaurantActual,request);
+
+        validate(restaurantActual, "restaurant");
+
         return update(id, restaurantActual);
+    }
+
+    private void validate(Restaurant restaurant, String objectName) {
+        BeanPropertyBindingResult bindingResult = new BeanPropertyBindingResult(restaurant,objectName);
+        smartValidator.validate(restaurant, bindingResult);
+
+        if(bindingResult.hasErrors()) {
+            throw new ValidationException(bindingResult);
+        }
     }
 
     private Restaurant verifyIfKitchenExist(Restaurant restaurant){
