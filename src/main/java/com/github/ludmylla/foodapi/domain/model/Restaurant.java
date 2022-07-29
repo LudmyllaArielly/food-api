@@ -37,7 +37,7 @@ public class Restaurant {
 
     @NotNull
     //@PositiveOrZero
-    @Multiple(number = 5)
+    //@Multiple(number = 5)
     @FreightRate
     private BigDecimal freightRate;
 

@@ -17,8 +17,11 @@ public class KitchenService {
 
     private static final String MSG_KITCHEN_IN_USE= "Code kitchen %d cannot be deleted because it is in use.";
 
-    @Autowired
     private KitchenRepository kitchenRepository;
+
+    public KitchenService(KitchenRepository kitchenRepository) {
+        this.kitchenRepository = kitchenRepository;
+    }
 
     public Kitchen create(Kitchen kitchen) {
         return kitchenRepository.save(kitchen);
