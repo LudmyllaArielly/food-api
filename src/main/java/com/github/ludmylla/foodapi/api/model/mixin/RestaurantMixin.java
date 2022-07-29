@@ -7,17 +7,17 @@ import com.github.ludmylla.foodapi.domain.model.FormOfPayment;
 import com.github.ludmylla.foodapi.domain.model.Kitchen;
 import com.github.ludmylla.foodapi.domain.model.Product;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class RestaurantMixin {
 
-    @JsonIgnore
-    private LocalDateTime registrationDate;
+    //@JsonIgnore
+    private OffsetDateTime registrationDate;
 
     @JsonIgnore
-    private LocalDateTime updateDate;
+    private OffsetDateTime updateDate;
 
     @JsonIgnoreProperties(value = "name", allowGetters = true)
     private Kitchen kitchen;

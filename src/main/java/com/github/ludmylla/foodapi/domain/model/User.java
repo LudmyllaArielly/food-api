@@ -1,6 +1,5 @@
 package com.github.ludmylla.foodapi.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;
@@ -24,7 +23,6 @@ public class User {
     private String email;
     private String password;
 
-    @JsonIgnore
     @CreationTimestamp
     @Column(columnDefinition = "datetime")
     private LocalDateTime registrationDate;
