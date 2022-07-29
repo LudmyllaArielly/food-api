@@ -1,10 +1,7 @@
 package com.github.ludmylla.foodapi.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.github.ludmylla.foodapi.core.validation.FreightRate;
 import com.github.ludmylla.foodapi.core.validation.Groups;
-import com.github.ludmylla.foodapi.core.validation.Multiple;
 import com.github.ludmylla.foodapi.core.validation.ZeroValueIncludeDescription;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -42,29 +39,14 @@ public class Restaurant {
     @FreightRate
     private BigDecimal freightRate;
 
-    @JsonIgnore
     @CreationTimestamp
     @Column(columnDefinition = "datetime")
     private LocalDateTime registrationDate;
 
-    @JsonIgnore
     @UpdateTimestamp
     @Column(columnDefinition = "datetime")
     private LocalDateTime updateDate;
 
-    /*
-    * @Valid valida as propriedades de cozinha
-    *
-    * @ConvertGroup diz que quando for valida a cozinha
-    * ao inves de usa o default, use o groups.createRestaurant.class
-    *
-    * //@JsonIgnoreProperties("hibernateLazyInitializer")
-    * */
-
-
-    // ignora o nome de cozinha em atualizar restaurant
-    // sendo temos somente o id de cozinha e nao ignora o get de name
-    @JsonIgnoreProperties(value = "name", allowGetters = true)
     @Valid
     @ConvertGroup(from = Default.class, to = Groups.KitchenId.class)
     @NotNull
@@ -72,18 +54,15 @@ public class Restaurant {
     @JoinColumn(name = "kitchen_id", nullable = false)
     private Kitchen kitchen;
 
-    @JsonIgnore
     @Embedded
     private Address address;
 
-    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "restaurant_form_of_payment",
     joinColumns = @JoinColumn(name = "restaurant_id"),
     inverseJoinColumns = @JoinColumn(name = "form_of_payment_id"))
     private List<FormOfPayment> formOfPayments = new ArrayList<>();
 
-    @JsonIgnore
     @OneToMany(mappedBy = "restaurant")
     private List<Product> products = new ArrayList<>();
 

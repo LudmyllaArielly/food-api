@@ -1,6 +1,5 @@
 package com.github.ludmylla.foodapi.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.ludmylla.foodapi.core.validation.Groups;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,7 +28,6 @@ public class Kitchen {
     @NotBlank
     private String name;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "kitchen")
     private List<Restaurant> restaurants = new ArrayList<>();
 
