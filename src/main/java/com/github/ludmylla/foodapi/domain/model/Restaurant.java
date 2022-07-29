@@ -1,6 +1,7 @@
 package com.github.ludmylla.foodapi.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.github.ludmylla.foodapi.core.validation.FreightRate;
 import com.github.ludmylla.foodapi.core.validation.Groups;
 import com.github.ludmylla.foodapi.core.validation.Multiple;
@@ -60,6 +61,10 @@ public class Restaurant {
     * //@JsonIgnoreProperties("hibernateLazyInitializer")
     * */
 
+
+    // ignora o nome de cozinha em atualizar restaurant
+    // sendo temos somente o id de cozinha e nao ignora o get de name
+    @JsonIgnoreProperties(value = "name", allowGetters = true)
     @Valid
     @ConvertGroup(from = Default.class, to = Groups.KitchenId.class)
     @NotNull
@@ -71,6 +76,7 @@ public class Restaurant {
     @Embedded
     private Address address;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "restaurant_form_of_payment",
     joinColumns = @JoinColumn(name = "restaurant_id"),
