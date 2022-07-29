@@ -2,7 +2,6 @@ package com.github.ludmylla.foodapi.domain.service;
 
 import com.github.ludmylla.foodapi.domain.exceptions.CityNotFoundException;
 import com.github.ludmylla.foodapi.domain.exceptions.EntityInUseException;
-import com.github.ludmylla.foodapi.domain.exceptions.EntityNotFoundException;
 import com.github.ludmylla.foodapi.domain.model.City;
 import com.github.ludmylla.foodapi.domain.model.State;
 import com.github.ludmylla.foodapi.domain.repository.CityRepository;
@@ -10,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -24,6 +24,7 @@ public class CityService {
     @Autowired
     private StateService stateService;
 
+    @Transactional
     public City create(City city){
         verifyIfStateExist(city);
         return cityRepository.save(city);
@@ -38,6 +39,7 @@ public class CityService {
                 .orElseThrow(() -> new CityNotFoundException(id));
     }
 
+    @Transactional
     public City update(Long id, City city){
         City cityActual = findById(id);
         verifyIfStateExist(city);
@@ -46,6 +48,7 @@ public class CityService {
         return cityRepository.save(city);
     }
 
+    @Transactional
     public void delete(Long id){
        try {
            City cityActual = findById(id);
