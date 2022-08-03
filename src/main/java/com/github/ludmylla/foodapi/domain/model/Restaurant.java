@@ -1,7 +1,5 @@
 package com.github.ludmylla.foodapi.domain.model;
 
-import com.github.ludmylla.foodapi.core.validation.FreightRate;
-import com.github.ludmylla.foodapi.core.validation.Groups;
 import com.github.ludmylla.foodapi.core.validation.ZeroValueIncludeDescription;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -9,11 +7,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.groups.ConvertGroup;
-import javax.validation.groups.Default;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
@@ -30,13 +23,8 @@ public class Restaurant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
     private String name;
 
-    @NotNull
-    //@PositiveOrZero
-    //@Multiple(number = 5)
-    @FreightRate
     private BigDecimal freightRate;
 
     @CreationTimestamp
@@ -47,9 +35,6 @@ public class Restaurant {
     @Column(columnDefinition = "datetime")
     private OffsetDateTime updateDate;
 
-    @Valid
-    @ConvertGroup(from = Default.class, to = Groups.KitchenId.class)
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "kitchen_id", nullable = false)
     private Kitchen kitchen;

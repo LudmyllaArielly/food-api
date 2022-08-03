@@ -2,8 +2,11 @@ package com.github.ludmylla.foodapi.api.controller;
 
 import com.github.ludmylla.foodapi.api.model.dtos.KitchenModel;
 import com.github.ludmylla.foodapi.api.model.dtos.RestaurantModel;
+import com.github.ludmylla.foodapi.api.model.dtos.input.RestaurantInputModel;
 import com.github.ludmylla.foodapi.domain.exceptions.BusinessException;
 import com.github.ludmylla.foodapi.domain.exceptions.EntityNotFoundException;
+import com.github.ludmylla.foodapi.domain.exceptions.KitchenNotFoundException;
+import com.github.ludmylla.foodapi.domain.model.Kitchen;
 import com.github.ludmylla.foodapi.domain.model.Restaurant;
 import com.github.ludmylla.foodapi.domain.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +28,14 @@ public class RestaurantController {
     private RestaurantService restaurantService;
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody @Valid Restaurant restaurant){
+    public ResponseEntity<RestaurantModel> create(@RequestBody @Valid RestaurantInputModel restaurantInput){
+
+       Restaurant restaurant = toDomainModel(restaurantInput);
        Restaurant restaurantCreate = restaurantService.create(restaurant);
        try {
-           return ResponseEntity.status(HttpStatus.CREATED).body(restaurantCreate);
-       }catch (EntityNotFoundException e){
-           throw new BusinessException(e.getMessage());
+           return ResponseEntity.status(HttpStatus.CREATED).body(toModel(restaurantCreate));
+       }catch (KitchenNotFoundException ex){
+           throw new BusinessException(ex.getMessage());
        }
     }
 
@@ -47,10 +52,10 @@ public class RestaurantController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid Restaurant restaurant){
+    public ResponseEntity<RestaurantModel> update(@PathVariable Long id, @RequestBody @Valid RestaurantInputModel restaurantInput){
         try {
-            Restaurant restaurantUpdate = restaurantService.update(id, restaurant);
-            return ResponseEntity.ok().body(restaurant);
+            Restaurant restaurant = toDomainModel(restaurantInput);
+            return ResponseEntity.ok().body(toModel(restaurantService.update(id, restaurant)));
         }catch (EntityNotFoundException e){
             throw new BusinessException(e.getMessage());
         }
@@ -80,6 +85,18 @@ public class RestaurantController {
         return restaurants.stream()
                 .map(restaurant -> toModel(restaurant))
                 .collect(Collectors.toList());
+    }
+
+    private Restaurant toDomainModel(RestaurantInputModel restaurantInput){
+        Restaurant restaurant = new Restaurant();
+        restaurant.setName(restaurantInput.getName());
+        restaurant.setFreightRate(restaurantInput.getFreightRate());
+
+        Kitchen kitchen = new Kitchen();
+        kitchen.setId(restaurantInput.getKitchen().getId());
+        restaurant.setKitchen(kitchen);
+
+        return restaurant;
     }
 
 }
