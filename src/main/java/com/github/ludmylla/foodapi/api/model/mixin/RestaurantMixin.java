@@ -13,7 +13,7 @@ import java.util.List;
 
 public abstract class RestaurantMixin {
 
-    //@JsonIgnore
+    @JsonIgnore
     private OffsetDateTime registrationDate;
 
     @JsonIgnore

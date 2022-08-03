@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,11 +26,11 @@ public class Order {
     private BigDecimal priceTotal;
 
     @CreationTimestamp
-    private LocalDateTime creationDate;
+    private OffsetDateTime creationDate;
 
-    private LocalDateTime confirmationDate;
-    private LocalDateTime deliveryDate;
-    private LocalDateTime cancellationDate;
+    private OffsetDateTime confirmationDate;
+    private OffsetDateTime deliveryDate;
+    private OffsetDateTime cancellationDate;
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status;

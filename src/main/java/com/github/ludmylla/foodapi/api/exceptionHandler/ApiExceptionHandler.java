@@ -28,6 +28,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -247,14 +248,14 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
         if(body == null) {
             body = Problem.builder()
-                    .timestamp(LocalDateTime.now())
+                    .timestamp(OffsetDateTime.now())
                     .status(status.value())
                     .title(status.getReasonPhrase())
                     .userMessage(Messages.MSG_ERROR_GENERIC_USER_FINAL)
                     .build();
         }else if (body instanceof String) {
             body = Problem.builder()
-                    .timestamp(LocalDateTime.now())
+                    .timestamp(OffsetDateTime.now())
                     .status(status.value())
                     .title((String) body)
                     .userMessage(Messages.MSG_ERROR_GENERIC_USER_FINAL)
@@ -265,7 +266,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     private Problem.ProblemBuilder createProblemBuilder(HttpStatus status, ProblemType problemType, String detail){
         return Problem.builder()
-                .timestamp(LocalDateTime.now())
+                .timestamp(OffsetDateTime.now())
                 .status(status.value())
                 .type(problemType.getUri())
                 .title(problemType.getTitle())
