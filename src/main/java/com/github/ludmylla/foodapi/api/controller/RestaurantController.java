@@ -1,5 +1,6 @@
 package com.github.ludmylla.foodapi.api.controller;
 
+import com.github.ludmylla.foodapi.api.model.dtos.KitchenModel;
 import com.github.ludmylla.foodapi.api.model.dtos.RestaurantModel;
 import com.github.ludmylla.foodapi.domain.exceptions.BusinessException;
 import com.github.ludmylla.foodapi.domain.exceptions.EntityNotFoundException;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/restaurants")
@@ -33,16 +35,15 @@ public class RestaurantController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Restaurant>> findAll(){
+    public ResponseEntity<List<RestaurantModel>> findAll(){
         List<Restaurant> list = restaurantService.findAll();
-        return ResponseEntity.ok(list);
+        return ResponseEntity.ok(toCollectionModel(list));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<RestaurantModel> findById(@PathVariable Long id){
         Restaurant restaurant = restaurantService.findById(id);
-        RestaurantModel restaurantModel = new RestaurantModel();
-        return ResponseEntity.ok(restaurantModel);
+        return ResponseEntity.ok(toModel(restaurant));
     }
 
     @PutMapping("/{id}")
@@ -59,6 +60,26 @@ public class RestaurantController {
     public ResponseEntity<?> partialUpdate(@PathVariable Long id, @RequestBody Map<String, Object> fields, HttpServletRequest request){
         Restaurant restaurant = restaurantService.partialUpdate(id, fields, request);
         return ResponseEntity.ok(restaurant);
+    }
+
+    private RestaurantModel toModel(Restaurant restaurant){
+        KitchenModel kitchenModel = new KitchenModel();
+        kitchenModel.setId(restaurant.getKitchen().getId());
+        kitchenModel.setName(restaurant.getKitchen().getName());
+
+        RestaurantModel restaurantModel = new RestaurantModel();
+        restaurantModel.setId(restaurant.getId());
+        restaurantModel.setName(restaurant.getName());
+        restaurantModel.setFreightRate(restaurant.getFreightRate());
+        restaurantModel.setKitchen(kitchenModel);
+
+        return restaurantModel;
+    }
+
+    private List<RestaurantModel> toCollectionModel(List<Restaurant> restaurants) {
+        return restaurants.stream()
+                .map(restaurant -> toModel(restaurant))
+                .collect(Collectors.toList());
     }
 
 }
