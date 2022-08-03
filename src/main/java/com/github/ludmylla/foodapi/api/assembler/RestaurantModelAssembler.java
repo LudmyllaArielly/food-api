@@ -3,6 +3,8 @@ package com.github.ludmylla.foodapi.api.assembler;
 import com.github.ludmylla.foodapi.api.model.dtos.KitchenModel;
 import com.github.ludmylla.foodapi.api.model.dtos.RestaurantModel;
 import com.github.ludmylla.foodapi.domain.model.Restaurant;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -11,18 +13,11 @@ import java.util.stream.Collectors;
 @Component
 public class RestaurantModelAssembler {
 
+    @Autowired
+    private ModelMapper mapper;
+
     public RestaurantModel toModel(Restaurant restaurant){
-        KitchenModel kitchenModel = new KitchenModel();
-        kitchenModel.setId(restaurant.getKitchen().getId());
-        kitchenModel.setName(restaurant.getKitchen().getName());
-
-        RestaurantModel restaurantModel = new RestaurantModel();
-        restaurantModel.setId(restaurant.getId());
-        restaurantModel.setName(restaurant.getName());
-        restaurantModel.setFreightRate(restaurant.getFreightRate());
-        restaurantModel.setKitchen(kitchenModel);
-
-        return restaurantModel;
+        return mapper.map(restaurant, RestaurantModel.class);
     }
 
     public List<RestaurantModel> toCollectionModel(List<Restaurant> restaurants) {
