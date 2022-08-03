@@ -1,5 +1,6 @@
 package com.github.ludmylla.foodapi.api.controller;
 
+import com.github.ludmylla.foodapi.api.model.dtos.RestaurantModel;
 import com.github.ludmylla.foodapi.domain.exceptions.BusinessException;
 import com.github.ludmylla.foodapi.domain.exceptions.EntityNotFoundException;
 import com.github.ludmylla.foodapi.domain.model.Restaurant;
@@ -38,9 +39,10 @@ public class RestaurantController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Restaurant> findById(@PathVariable Long id){
+    public ResponseEntity<RestaurantModel> findById(@PathVariable Long id){
         Restaurant restaurant = restaurantService.findById(id);
-        return ResponseEntity.ok(restaurant);
+        RestaurantModel restaurantModel = new RestaurantModel();
+        return ResponseEntity.ok(restaurantModel);
     }
 
     @PutMapping("/{id}")
