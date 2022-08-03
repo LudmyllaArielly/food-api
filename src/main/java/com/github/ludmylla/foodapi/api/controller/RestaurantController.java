@@ -1,5 +1,6 @@
 package com.github.ludmylla.foodapi.api.controller;
 
+import com.github.ludmylla.foodapi.api.assembler.RestaurantModelAssembler;
 import com.github.ludmylla.foodapi.api.model.dtos.KitchenModel;
 import com.github.ludmylla.foodapi.api.model.dtos.RestaurantModel;
 import com.github.ludmylla.foodapi.api.model.dtos.input.RestaurantInputModel;
@@ -27,13 +28,16 @@ public class RestaurantController {
     @Autowired
     private RestaurantService restaurantService;
 
+    @Autowired
+    private RestaurantModelAssembler modelAssembler;
+
     @PostMapping
     public ResponseEntity<RestaurantModel> create(@RequestBody @Valid RestaurantInputModel restaurantInput){
 
        Restaurant restaurant = toDomainModel(restaurantInput);
        Restaurant restaurantCreate = restaurantService.create(restaurant);
        try {
-           return ResponseEntity.status(HttpStatus.CREATED).body(toModel(restaurantCreate));
+           return ResponseEntity.status(HttpStatus.CREATED).body(modelAssembler.toModel(restaurantCreate));
        }catch (KitchenNotFoundException ex){
            throw new BusinessException(ex.getMessage());
        }
@@ -42,20 +46,20 @@ public class RestaurantController {
     @GetMapping
     public ResponseEntity<List<RestaurantModel>> findAll(){
         List<Restaurant> list = restaurantService.findAll();
-        return ResponseEntity.ok(toCollectionModel(list));
+        return ResponseEntity.ok(modelAssembler.toCollectionModel(list));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<RestaurantModel> findById(@PathVariable Long id){
         Restaurant restaurant = restaurantService.findById(id);
-        return ResponseEntity.ok(toModel(restaurant));
+        return ResponseEntity.ok(modelAssembler.toModel(restaurant));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<RestaurantModel> update(@PathVariable Long id, @RequestBody @Valid RestaurantInputModel restaurantInput){
         try {
             Restaurant restaurant = toDomainModel(restaurantInput);
-            return ResponseEntity.ok().body(toModel(restaurantService.update(id, restaurant)));
+            return ResponseEntity.ok().body(modelAssembler.toModel(restaurantService.update(id, restaurant)));
         }catch (EntityNotFoundException e){
             throw new BusinessException(e.getMessage());
         }
@@ -67,25 +71,6 @@ public class RestaurantController {
         return ResponseEntity.ok(restaurant);
     }
 
-    private RestaurantModel toModel(Restaurant restaurant){
-        KitchenModel kitchenModel = new KitchenModel();
-        kitchenModel.setId(restaurant.getKitchen().getId());
-        kitchenModel.setName(restaurant.getKitchen().getName());
-
-        RestaurantModel restaurantModel = new RestaurantModel();
-        restaurantModel.setId(restaurant.getId());
-        restaurantModel.setName(restaurant.getName());
-        restaurantModel.setFreightRate(restaurant.getFreightRate());
-        restaurantModel.setKitchen(kitchenModel);
-
-        return restaurantModel;
-    }
-
-    private List<RestaurantModel> toCollectionModel(List<Restaurant> restaurants) {
-        return restaurants.stream()
-                .map(restaurant -> toModel(restaurant))
-                .collect(Collectors.toList());
-    }
 
     private Restaurant toDomainModel(RestaurantInputModel restaurantInput){
         Restaurant restaurant = new Restaurant();
