@@ -51,7 +51,7 @@ public class StateController {
     public ResponseEntity<StateModel> update(@PathVariable Long id ,@RequestBody @Valid StateInputModel stateInput){
         State state = stateInputDisassembler.toDomainModel(stateInput);
         State stateUpdate = stateService.update(id, state);
-        return ResponseEntity.ok(stateModelAssembler.toModel(state));
+        return ResponseEntity.ok(stateModelAssembler.toModel(stateUpdate));
     }
 
     @DeleteMapping("/{id}")
