@@ -1,6 +1,6 @@
 package com.github.ludmylla.foodapi.api.assembler;
 
-import com.github.ludmylla.foodapi.api.model.dtos.input.StateInputModel;
+import com.github.ludmylla.foodapi.domain.dtos.input.StateInputModel;
 import com.github.ludmylla.foodapi.domain.model.State;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

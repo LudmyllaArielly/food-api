@@ -2,8 +2,8 @@ package com.github.ludmylla.foodapi.api.controller;
 
 import com.github.ludmylla.foodapi.api.assembler.RestaurantInputDisassembler;
 import com.github.ludmylla.foodapi.api.assembler.RestaurantModelAssembler;
-import com.github.ludmylla.foodapi.api.model.dtos.RestaurantModel;
-import com.github.ludmylla.foodapi.api.model.dtos.input.RestaurantInputModel;
+import com.github.ludmylla.foodapi.domain.dtos.RestaurantModel;
+import com.github.ludmylla.foodapi.domain.dtos.input.RestaurantInputModel;
 import com.github.ludmylla.foodapi.domain.exceptions.BusinessException;
 import com.github.ludmylla.foodapi.domain.exceptions.EntityNotFoundException;
 import com.github.ludmylla.foodapi.domain.exceptions.KitchenNotFoundException;

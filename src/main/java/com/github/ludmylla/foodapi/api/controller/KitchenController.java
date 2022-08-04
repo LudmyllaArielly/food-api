@@ -2,8 +2,8 @@ package com.github.ludmylla.foodapi.api.controller;
 
 import com.github.ludmylla.foodapi.api.assembler.KitchenInputDisassembler;
 import com.github.ludmylla.foodapi.api.assembler.KitchenModelAssembler;
-import com.github.ludmylla.foodapi.api.model.dtos.KitchenModel;
-import com.github.ludmylla.foodapi.api.model.dtos.input.KitchenInputModel;
+import com.github.ludmylla.foodapi.domain.dtos.KitchenModel;
+import com.github.ludmylla.foodapi.domain.dtos.input.KitchenInputModel;
 import com.github.ludmylla.foodapi.domain.model.Kitchen;
 import com.github.ludmylla.foodapi.domain.service.KitchenService;
 import org.springframework.beans.factory.annotation.Autowired;

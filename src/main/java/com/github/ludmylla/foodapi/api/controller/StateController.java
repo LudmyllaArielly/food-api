@@ -2,8 +2,8 @@ package com.github.ludmylla.foodapi.api.controller;
 
 import com.github.ludmylla.foodapi.api.assembler.StateInputDisassembler;
 import com.github.ludmylla.foodapi.api.assembler.StateModelAssembler;
-import com.github.ludmylla.foodapi.api.model.dtos.StateModel;
-import com.github.ludmylla.foodapi.api.model.dtos.input.StateInputModel;
+import com.github.ludmylla.foodapi.domain.dtos.StateModel;
+import com.github.ludmylla.foodapi.domain.dtos.input.StateInputModel;
 import com.github.ludmylla.foodapi.domain.model.State;
 import com.github.ludmylla.foodapi.domain.service.StateService;
 import org.springframework.beans.factory.annotation.Autowired;

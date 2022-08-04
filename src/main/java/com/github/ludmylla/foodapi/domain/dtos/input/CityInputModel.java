@@ -1,4 +1,4 @@
-package com.github.ludmylla.foodapi.api.model.dtos.input;
+package com.github.ludmylla.foodapi.domain.dtos.input;
 
 import lombok.Getter;
 import lombok.Setter;

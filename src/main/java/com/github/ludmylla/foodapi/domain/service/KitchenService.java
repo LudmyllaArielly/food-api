@@ -48,8 +48,9 @@ public class KitchenService {
     @Transactional
     public void delete(Long id){
         try {
-            Kitchen kitchenActual = findById(id);
+            findById(id);
             kitchenRepository.deleteById(id);
+            kitchenRepository.flush();
         }catch (EmptyResultDataAccessException e){
             throw new KitchenNotFoundException(id);
         }catch (DataIntegrityViolationException ex){

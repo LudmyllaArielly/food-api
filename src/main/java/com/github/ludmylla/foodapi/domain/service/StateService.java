@@ -44,8 +44,9 @@ public class StateService {
     @Transactional
     public void delete(Long id){
        try {
-           State stateActual = findById(id);
+           findById(id);
            stateRepository.deleteById(id);
+           stateRepository.flush();
        }catch (EmptyResultDataAccessException e){
            throw new StateNotFoundException(id);
        }catch (DataIntegrityViolationException ex){

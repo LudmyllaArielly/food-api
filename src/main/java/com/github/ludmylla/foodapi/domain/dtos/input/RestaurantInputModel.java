@@ -1,4 +1,4 @@
-package com.github.ludmylla.foodapi.api.model.dtos.input;
+package com.github.ludmylla.foodapi.domain.dtos.input;
 
 import com.github.ludmylla.foodapi.core.validation.FreightRate;
 import lombok.Getter;

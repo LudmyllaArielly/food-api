@@ -51,8 +51,9 @@ public class CityService {
     @Transactional
     public void delete(Long id){
        try {
-           City cityActual = findById(id);
+           findById(id);
            cityRepository.deleteById(id);
+           cityRepository.flush();
        }catch (EmptyResultDataAccessException e){
            throw new CityNotFoundException(id);
        }catch (DataIntegrityViolationException ex){

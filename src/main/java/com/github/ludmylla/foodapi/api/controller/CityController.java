@@ -2,8 +2,8 @@ package com.github.ludmylla.foodapi.api.controller;
 
 import com.github.ludmylla.foodapi.api.assembler.CityInputDisassembler;
 import com.github.ludmylla.foodapi.api.assembler.CityModelAssembler;
-import com.github.ludmylla.foodapi.api.model.dtos.CityModel;
-import com.github.ludmylla.foodapi.api.model.dtos.input.CityInputModel;
+import com.github.ludmylla.foodapi.domain.dtos.CityModel;
+import com.github.ludmylla.foodapi.domain.dtos.input.CityInputModel;
 import com.github.ludmylla.foodapi.domain.exceptions.BusinessException;
 import com.github.ludmylla.foodapi.domain.exceptions.StateNotFoundException;
 import com.github.ludmylla.foodapi.domain.model.City;

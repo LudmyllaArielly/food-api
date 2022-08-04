@@ -1,12 +1,13 @@
-package com.github.ludmylla.foodapi.api.model.dtos;
+package com.github.ludmylla.foodapi.domain.dtos;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Setter
 @Getter
-public class StateModel {
+public class CityModel {
 
     private Long id;
     private String name;
+    private StateModel state;
 }
