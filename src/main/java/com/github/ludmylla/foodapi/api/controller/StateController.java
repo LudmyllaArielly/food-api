@@ -1,5 +1,9 @@
 package com.github.ludmylla.foodapi.api.controller;
 
+import com.github.ludmylla.foodapi.api.assembler.StateInputDisassembler;
+import com.github.ludmylla.foodapi.api.assembler.StateModelAssembler;
+import com.github.ludmylla.foodapi.api.model.dtos.StateModel;
+import com.github.ludmylla.foodapi.api.model.dtos.input.StateInputModel;
 import com.github.ludmylla.foodapi.domain.model.State;
 import com.github.ludmylla.foodapi.domain.service.StateService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,29 +21,37 @@ public class StateController {
     @Autowired
     private StateService stateService;
 
+    @Autowired
+    private StateInputDisassembler stateInputDisassembler;
+
+    @Autowired
+    private StateModelAssembler stateModelAssembler;
+
     @PostMapping
-    public ResponseEntity<State> create(@RequestBody @Valid State state){
+    public ResponseEntity<StateModel> create(@RequestBody @Valid StateInputModel stateInput){
+        State state = stateInputDisassembler.toDomainModel(stateInput);
         state = stateService.create(state);
-        return ResponseEntity.status(HttpStatus.CREATED).body(state);
+        return ResponseEntity.status(HttpStatus.CREATED).body(stateModelAssembler.toModel(state));
     }
 
     @GetMapping
-    public ResponseEntity<List<State>> findAll(){
+    public ResponseEntity<List<StateModel>> findAll(){
         List<State> list = stateService.findAll();
-        return ResponseEntity.ok(list);
+        return ResponseEntity.ok(stateModelAssembler.toCollectionModel(list));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<State> findById(@PathVariable Long id){
+    public ResponseEntity<StateModel> findById(@PathVariable Long id){
         State state = stateService.findById(id);
-        return ResponseEntity.ok(state);
+        return ResponseEntity.ok(stateModelAssembler.toModel(state));
     }
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<State> update(@PathVariable Long id ,@RequestBody @Valid State state){
-        state = stateService.update(id, state);
-        return ResponseEntity.ok(state);
+    public ResponseEntity<StateModel> update(@PathVariable Long id ,@RequestBody @Valid StateInputModel stateInput){
+        State state = stateInputDisassembler.toDomainModel(stateInput);
+        State stateUpdate = stateService.update(id, state);
+        return ResponseEntity.ok(stateModelAssembler.toModel(state));
     }
 
     @DeleteMapping("/{id}")
