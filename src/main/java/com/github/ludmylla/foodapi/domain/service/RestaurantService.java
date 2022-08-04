@@ -2,6 +2,7 @@ package com.github.ludmylla.foodapi.domain.service;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.ludmylla.foodapi.api.assembler.RestaurantInputDisassembler;
 import com.github.ludmylla.foodapi.core.validation.ValidationException;
 import com.github.ludmylla.foodapi.domain.exceptions.RestaurantNofFoundException;
 import com.github.ludmylla.foodapi.domain.model.Kitchen;
@@ -37,6 +38,9 @@ public class RestaurantService {
     @Autowired
     private SmartValidator smartValidator;
 
+    @Autowired
+    private RestaurantInputDisassembler restaurantInputDisassembler;
+
     @Transactional
     public Restaurant create(Restaurant restaurant){
         verifyIfKitchenExist(restaurant);
@@ -58,7 +62,6 @@ public class RestaurantService {
         verifyIfKitchenExist(restaurant);
         Restaurant restaurantActual = findById(id);
 
-        // pode ser tirada se a classe input restaurant tiver um id
         restaurant.setId(id);
         restaurant.setRegistrationDate(restaurantActual.getRegistrationDate());
 

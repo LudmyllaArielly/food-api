@@ -32,7 +32,6 @@ public class RestaurantController {
     @Autowired
     private RestaurantInputDisassembler inputDisassembler;
 
-
     @PostMapping
     public ResponseEntity<RestaurantModel> create(@RequestBody @Valid RestaurantInputModel restaurantInput){
 
@@ -72,8 +71,5 @@ public class RestaurantController {
         Restaurant restaurant = restaurantService.partialUpdate(id, fields, request);
         return ResponseEntity.ok(restaurant);
     }
-
-
-
 
 }
