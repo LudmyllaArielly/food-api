@@ -36,10 +36,10 @@ public class FormOfPaymentService {
     }
 
     @Transactional
-    public void update(Long id,FormOfPayment formOfPayment){
+    public FormOfPayment update(Long id, FormOfPayment formOfPayment){
         FormOfPayment formOfPaymentActual = findById(id);
         formOfPayment.setId(formOfPaymentActual.getId());
-        formOfPaymentRepository.save(formOfPayment);
+        return formOfPaymentRepository.save(formOfPayment);
     }
 
     @Transactional
