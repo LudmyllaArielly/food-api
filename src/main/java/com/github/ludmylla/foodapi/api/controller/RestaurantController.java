@@ -66,6 +66,18 @@ public class RestaurantController {
         }
     }
 
+    @PutMapping("/{id}/activated")
+    public ResponseEntity<Void> activated (@PathVariable Long id){
+        restaurantService.activated(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{id}/inactivated")
+    public ResponseEntity<Void> inactivated (@PathVariable Long id){
+        restaurantService.inactivated(id);
+        return ResponseEntity.noContent().build();
+    }
+
     @PatchMapping("/{id}")
     public ResponseEntity<?> partialUpdate(@PathVariable Long id, @RequestBody Map<String, Object> fields, HttpServletRequest request){
         Restaurant restaurant = restaurantService.partialUpdate(id, fields, request);

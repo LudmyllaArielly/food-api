@@ -70,6 +70,18 @@ public class RestaurantService {
         return restaurantRepository.save(restaurant);
     }
 
+    @Transactional
+    public void activated(Long id){
+        Restaurant restaurantActual = findById(id);
+        restaurantActual.activated();
+    }
+
+    @Transactional
+    public void inactivated(Long id){
+        Restaurant restaurantActual = findById(id);
+        restaurantActual.inactivated();
+    }
+
     public Restaurant partialUpdate(Long id, Map<String, Object> fields, HttpServletRequest request){
         Restaurant restaurantActual =  findById(id);
         merge(fields, restaurantActual,request);

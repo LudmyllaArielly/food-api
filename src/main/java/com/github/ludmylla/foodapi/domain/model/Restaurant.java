@@ -27,6 +27,8 @@ public class Restaurant {
 
     private BigDecimal freightRate;
 
+    private Boolean activated = Boolean.TRUE;
+
     @CreationTimestamp
     @Column(columnDefinition = "datetime")
     private OffsetDateTime registrationDate;
@@ -51,4 +53,11 @@ public class Restaurant {
     @OneToMany(mappedBy = "restaurant")
     private List<Product> products = new ArrayList<>();
 
+    public void activated(){
+        setActivated(true);
+    }
+
+    public void inactivated(){
+        setActivated(false);
+    }
 }
