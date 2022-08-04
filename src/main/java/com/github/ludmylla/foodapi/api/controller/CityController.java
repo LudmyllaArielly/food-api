@@ -1,5 +1,9 @@
 package com.github.ludmylla.foodapi.api.controller;
 
+import com.github.ludmylla.foodapi.api.assembler.CityInputDisassembler;
+import com.github.ludmylla.foodapi.api.assembler.CityModelAssembler;
+import com.github.ludmylla.foodapi.api.model.dtos.CityModel;
+import com.github.ludmylla.foodapi.api.model.dtos.input.CityInputModel;
 import com.github.ludmylla.foodapi.domain.exceptions.BusinessException;
 import com.github.ludmylla.foodapi.domain.exceptions.StateNotFoundException;
 import com.github.ludmylla.foodapi.domain.model.City;
@@ -19,33 +23,41 @@ public class CityController {
     @Autowired
     private CityService cityService;
 
+    @Autowired
+    private CityModelAssembler cityModelAssembler;
+
+    @Autowired
+    private CityInputDisassembler cityInputDisassembler;
+
     @PostMapping
-    public ResponseEntity<City> create(@RequestBody @Valid City city){
+    public ResponseEntity<CityModel> create(@RequestBody @Valid CityInputModel cityInput){
         try {
+            City city = cityInputDisassembler.toDomainModel(cityInput);
             city = cityService.create(city);
-            return ResponseEntity.status(HttpStatus.CREATED).body(city);
-        }catch (StateNotFoundException e){
-            throw new BusinessException(e.getMessage(), e);
+            return ResponseEntity.status(HttpStatus.CREATED).body(cityModelAssembler.toModel(city));
+        }catch (StateNotFoundException ex){
+            throw new BusinessException(ex.getMessage(), ex);
         }
     }
 
     @GetMapping
-    public ResponseEntity<List<City>> findAll(){
+    public ResponseEntity<List<CityModel>> findAll(){
         List<City> list = cityService.findAll();
-        return ResponseEntity.ok(list);
+        return ResponseEntity.ok(cityModelAssembler.toCollectionModel(list));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<City> findById(@PathVariable Long id){
+    public ResponseEntity<CityModel> findById(@PathVariable Long id){
         City city = cityService.findById(id);
-        return ResponseEntity.ok(city);
+        return ResponseEntity.ok(cityModelAssembler.toModel(city));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<City> update(@PathVariable Long id ,@RequestBody @Valid City city){
+    public ResponseEntity<CityModel> update(@PathVariable Long id ,@RequestBody @Valid CityInputModel cityInput){
         try {
-            city = cityService.update(id, city);
-            return ResponseEntity.ok(city);
+            City city = cityInputDisassembler.toDomainModel(cityInput);
+            City cityUpdate = cityService.update(id, city);
+            return ResponseEntity.ok(cityModelAssembler.toModel(cityUpdate));
         }catch (StateNotFoundException e){
             throw new BusinessException(e.getMessage(), e);
         }
