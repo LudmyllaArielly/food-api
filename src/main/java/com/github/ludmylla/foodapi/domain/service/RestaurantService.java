@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.ludmylla.foodapi.api.assembler.RestaurantInputDisassembler;
 import com.github.ludmylla.foodapi.core.validation.ValidationException;
 import com.github.ludmylla.foodapi.domain.exceptions.RestaurantNofFoundException;
+import com.github.ludmylla.foodapi.domain.model.City;
 import com.github.ludmylla.foodapi.domain.model.Kitchen;
 import com.github.ludmylla.foodapi.domain.model.Restaurant;
 import com.github.ludmylla.foodapi.domain.repository.RestaurantRepository;
@@ -36,6 +37,9 @@ public class RestaurantService {
     private KitchenService kitchenService;
 
     @Autowired
+    private CityService cityService;
+
+    @Autowired
     private SmartValidator smartValidator;
 
     @Autowired
@@ -44,6 +48,7 @@ public class RestaurantService {
     @Transactional
     public Restaurant create(Restaurant restaurant){
         verifyIfKitchenExist(restaurant);
+        verifyIfCityExist(restaurant);
         return restaurantRepository.save(restaurant);
     }
 
@@ -60,6 +65,7 @@ public class RestaurantService {
 
     public Restaurant update(Long id, Restaurant restaurant){
         verifyIfKitchenExist(restaurant);
+        verifyIfCityExist(restaurant);
         Restaurant restaurantActual = findById(id);
 
         restaurant.setId(id);
@@ -106,6 +112,14 @@ public class RestaurantService {
         restaurant.setKitchen(kitchen);
         return restaurant;
     }
+
+    private Restaurant verifyIfCityExist(Restaurant restaurant){
+        Long idCity = restaurant.getAddress().getCity().getId();
+        City city = cityService.findById(idCity);
+        restaurant.getAddress().setCity(city);
+        return restaurant;
+    }
+
 
     private void merge(Map<String, Object> fields, Restaurant restaurantDestiny,HttpServletRequest request) {
         ServletServerHttpRequest servletServerHttpRequest = new ServletServerHttpRequest(request);

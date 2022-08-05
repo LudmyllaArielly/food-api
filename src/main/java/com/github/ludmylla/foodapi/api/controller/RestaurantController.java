@@ -5,6 +5,7 @@ import com.github.ludmylla.foodapi.api.assembler.RestaurantModelAssembler;
 import com.github.ludmylla.foodapi.domain.dtos.RestaurantModel;
 import com.github.ludmylla.foodapi.domain.dtos.input.RestaurantInputModel;
 import com.github.ludmylla.foodapi.domain.exceptions.BusinessException;
+import com.github.ludmylla.foodapi.domain.exceptions.CityNotFoundException;
 import com.github.ludmylla.foodapi.domain.exceptions.EntityNotFoundException;
 import com.github.ludmylla.foodapi.domain.exceptions.KitchenNotFoundException;
 import com.github.ludmylla.foodapi.domain.model.Restaurant;
@@ -34,13 +35,11 @@ public class RestaurantController {
 
     @PostMapping
     public ResponseEntity<RestaurantModel> create(@RequestBody @Valid RestaurantInputModel restaurantInput){
-
-       Restaurant restaurant = inputDisassembler.toDomainModel(restaurantInput);
-       Restaurant restaurantCreate = restaurantService.create(restaurant);
-       try {
-           return ResponseEntity.status(HttpStatus.CREATED).body(modelAssembler.toModel(restaurantCreate));
-       }catch (KitchenNotFoundException ex){
-           throw new BusinessException(ex.getMessage());
+        try {
+           Restaurant restaurant = inputDisassembler.toDomainModel(restaurantInput);
+           return ResponseEntity.status(HttpStatus.CREATED).body(modelAssembler.toModel(restaurantService.create(restaurant)));
+       }catch (KitchenNotFoundException | CityNotFoundException e){
+           throw new BusinessException(e.getMessage());
        }
     }
 
@@ -61,7 +60,7 @@ public class RestaurantController {
         try {
             Restaurant restaurant = inputDisassembler.toDomainModel(restaurantInput);
             return ResponseEntity.ok().body(modelAssembler.toModel(restaurantService.update(id, restaurant)));
-        }catch (EntityNotFoundException e){
+        }catch (KitchenNotFoundException | CityNotFoundException e){
             throw new BusinessException(e.getMessage());
         }
     }
