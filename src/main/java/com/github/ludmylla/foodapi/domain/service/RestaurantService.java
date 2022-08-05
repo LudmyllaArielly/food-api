@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.ludmylla.foodapi.api.assembler.RestaurantInputDisassembler;
 import com.github.ludmylla.foodapi.core.validation.ValidationException;
-import com.github.ludmylla.foodapi.domain.exceptions.RestaurantNofFoundException;
+import com.github.ludmylla.foodapi.domain.dtos.exceptions.RestaurantNofFoundException;
 import com.github.ludmylla.foodapi.domain.model.City;
 import com.github.ludmylla.foodapi.domain.model.Kitchen;
 import com.github.ludmylla.foodapi.domain.model.Restaurant;

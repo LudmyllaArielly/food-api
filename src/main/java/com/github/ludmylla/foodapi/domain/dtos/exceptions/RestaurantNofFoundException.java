@@ -1,4 +1,4 @@
-package com.github.ludmylla.foodapi.domain.exceptions;
+package com.github.ludmylla.foodapi.domain.dtos.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

@@ -1,11 +1,9 @@
 package com.github.ludmylla.foodapi.domain.service;
 
-import com.github.ludmylla.foodapi.domain.exceptions.EntityInUseException;
-import com.github.ludmylla.foodapi.domain.exceptions.EntityNotFoundException;
-import com.github.ludmylla.foodapi.domain.exceptions.KitchenNotFoundException;
+import com.github.ludmylla.foodapi.domain.dtos.exceptions.EntityInUseException;
+import com.github.ludmylla.foodapi.domain.dtos.exceptions.KitchenNotFoundException;
 import com.github.ludmylla.foodapi.domain.model.Kitchen;
 import com.github.ludmylla.foodapi.domain.repository.KitchenRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
