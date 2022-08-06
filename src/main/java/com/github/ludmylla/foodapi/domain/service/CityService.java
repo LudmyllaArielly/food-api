@@ -1,7 +1,7 @@
 package com.github.ludmylla.foodapi.domain.service;
 
-import com.github.ludmylla.foodapi.domain.dtos.exceptions.CityNotFoundException;
-import com.github.ludmylla.foodapi.domain.dtos.exceptions.EntityInUseException;
+import com.github.ludmylla.foodapi.domain.service.exceptions.CityNotFoundException;
+import com.github.ludmylla.foodapi.domain.service.exceptions.EntityInUseException;
 import com.github.ludmylla.foodapi.domain.model.City;
 import com.github.ludmylla.foodapi.domain.model.State;
 import com.github.ludmylla.foodapi.domain.repository.CityRepository;

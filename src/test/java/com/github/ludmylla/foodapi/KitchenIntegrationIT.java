@@ -1,7 +1,7 @@
 package com.github.ludmylla.foodapi;
 
-import com.github.ludmylla.foodapi.domain.dtos.exceptions.EntityInUseException;
-import com.github.ludmylla.foodapi.domain.dtos.exceptions.EntityNotFoundException;
+import com.github.ludmylla.foodapi.domain.service.exceptions.EntityInUseException;
+import com.github.ludmylla.foodapi.domain.service.exceptions.EntityNotFoundException;
 import com.github.ludmylla.foodapi.domain.model.Kitchen;
 import com.github.ludmylla.foodapi.domain.service.KitchenService;
 import org.junit.jupiter.api.Assertions;

@@ -1,7 +1,7 @@
 package com.github.ludmylla.foodapi.domain.service;
 
-import com.github.ludmylla.foodapi.domain.dtos.exceptions.EntityInUseException;
-import com.github.ludmylla.foodapi.domain.dtos.exceptions.TeamNotFoundException;
+import com.github.ludmylla.foodapi.domain.service.exceptions.EntityInUseException;
+import com.github.ludmylla.foodapi.domain.service.exceptions.TeamNotFoundException;
 import com.github.ludmylla.foodapi.domain.model.Team;
 import com.github.ludmylla.foodapi.domain.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package com.github.ludmylla.foodapi.domain.service;
 
-import com.github.ludmylla.foodapi.domain.dtos.exceptions.EntityInUseException;
-import com.github.ludmylla.foodapi.domain.dtos.exceptions.FormOfPaymentNotFoundException;
+import com.github.ludmylla.foodapi.domain.service.exceptions.EntityInUseException;
+import com.github.ludmylla.foodapi.domain.service.exceptions.FormOfPaymentNotFoundException;
 import com.github.ludmylla.foodapi.domain.model.FormOfPayment;
 import com.github.ludmylla.foodapi.domain.repository.FormOfPaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;

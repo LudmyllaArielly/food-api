@@ -1,4 +1,4 @@
-package com.github.ludmylla.foodapi.domain.dtos.exceptions;
+package com.github.ludmylla.foodapi.domain.service.exceptions;
 
 public class BusinessException extends RuntimeException{
     private static final long serialVersionUID = 1L;
