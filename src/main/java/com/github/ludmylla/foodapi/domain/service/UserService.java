@@ -35,6 +35,7 @@ public class UserService {
     public User update(Long id, User user){
         User userActual = findById(id);
         user.setId(userActual.getId());
+        user.setPassword(userActual.getPassword());
         return userRepository.save(user);
     }
 
