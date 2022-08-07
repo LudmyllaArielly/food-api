@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -19,6 +20,7 @@ public class UserService {
 
     @Transactional
     public User create(User user){
+        checksIfTheUserEmailAlreadyExists(user);
         return userRepository.save(user);
     }
 
@@ -35,7 +37,9 @@ public class UserService {
     public User update(Long id, User user){
         User userActual = findById(id);
         user.setId(userActual.getId());
+        checksIfTheUserEmailAlreadyExists(user);
         user.setPassword(userActual.getPassword());
+        user.setRegistrationDate(userActual.getRegistrationDate());
         return userRepository.save(user);
     }
 
@@ -56,4 +60,13 @@ public class UserService {
         userRepository.deleteById(id);
         userRepository.flush();
     }
+
+    private void checksIfTheUserEmailAlreadyExists(User user){
+        Optional<User> userEmailInUser = userRepository.findByEmail(user.getEmail());
+
+        if(userEmailInUser.isPresent() && !userEmailInUser.get().equals(user)){
+            throw new BusinessException(String.format("There is already a registered user with this email.", user.getEmail()));
+        }
+    }
+
 }
