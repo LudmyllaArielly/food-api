@@ -10,7 +10,9 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @ZeroValueIncludeDescription(valueField = "freightRate", descriptionField= "name", descriptionRequired= "Freight rate free")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -48,7 +50,7 @@ public class Restaurant {
     @JoinTable(name = "restaurant_form_of_payment",
     joinColumns = @JoinColumn(name = "restaurant_id"),
     inverseJoinColumns = @JoinColumn(name = "form_of_payment_id"))
-    private List<FormOfPayment> formOfPayments = new ArrayList<>();
+    private Set<FormOfPayment> formOfPayments = new HashSet<>();
 
     @OneToMany(mappedBy = "restaurant")
     private List<Product> products = new ArrayList<>();
@@ -59,5 +61,13 @@ public class Restaurant {
 
     public void inactivated(){
         setActivated(false);
+    }
+
+    public boolean removeFormOfPayment(FormOfPayment formOfPayment){
+        return getFormOfPayments().remove(formOfPayment);
+    }
+
+    public boolean addFormOfPayment(FormOfPayment formOfPayment){
+        return getFormOfPayments().add(formOfPayment);
     }
 }
