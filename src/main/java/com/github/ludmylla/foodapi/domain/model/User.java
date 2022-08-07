@@ -34,4 +34,12 @@ public class User {
     inverseJoinColumns = @JoinColumn(name = "team_id"))
     private List<Team> teams = new ArrayList<>();
 
+    public boolean passwordMatchesWith(String password){
+        return getPassword().equals(password);
+    }
+
+    public boolean passwordDoesNotMatch(String password){
+        return !passwordMatchesWith(password);
+    }
+
 }
