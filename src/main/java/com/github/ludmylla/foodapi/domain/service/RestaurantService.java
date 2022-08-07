@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.ludmylla.foodapi.api.assembler.RestaurantInputDisassembler;
 import com.github.ludmylla.foodapi.core.validation.ValidationException;
+import com.github.ludmylla.foodapi.domain.model.FormOfPayment;
 import com.github.ludmylla.foodapi.domain.service.exceptions.RestaurantNofFoundException;
 import com.github.ludmylla.foodapi.domain.model.City;
 import com.github.ludmylla.foodapi.domain.model.Kitchen;
@@ -38,6 +39,9 @@ public class RestaurantService {
 
     @Autowired
     private CityService cityService;
+
+    @Autowired
+    private FormOfPaymentService formOfPaymentService;
 
     @Autowired
     private SmartValidator smartValidator;
@@ -86,6 +90,22 @@ public class RestaurantService {
     public void inactivated(Long id){
         Restaurant restaurantActual = findById(id);
         restaurantActual.inactivated();
+    }
+
+    @Transactional
+    public void disassociateFormOfPayment(Long restaurantId, Long formOfPaymentId){
+        Restaurant restaurant = findById(restaurantId);
+        FormOfPayment formOfPayment = formOfPaymentService.findById(formOfPaymentId);
+
+        restaurant.removeFormOfPayment(formOfPayment);
+    }
+
+    @Transactional
+    public void addFormOfPayment(Long restaurantId, Long formOfPaymentId){
+        Restaurant restaurant = findById(restaurantId);
+        FormOfPayment formOfPayment = formOfPaymentService.findById(formOfPaymentId);
+
+        restaurant.addFormOfPayment(formOfPayment);
     }
 
     public Restaurant partialUpdate(Long id, Map<String, Object> fields, HttpServletRequest request){
