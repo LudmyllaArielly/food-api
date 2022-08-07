@@ -5,7 +5,9 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Data
@@ -23,6 +25,6 @@ public class Team {
     @JoinTable(name = "team_permission",
     joinColumns = @JoinColumn(name = "team_id"),
     inverseJoinColumns = @JoinColumn(name = "permission_id"))
-    private List<Permission> permission = new ArrayList<>();
+    private Set<Permission> permission = new HashSet<>();
 
 }
