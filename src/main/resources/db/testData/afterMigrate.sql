@@ -37,14 +37,13 @@ insert into form_of_payment(description) values ("Cartão de débito");
 insert into form_of_payment(description) values ("Pix");
 insert into form_of_payment(description) values ("Dinheiro");
 
-insert into permission (name, description) values ('CONSULTAR_COZINHAS', 'Permite consultar cozinhas');
-insert into permission (name, description) values ('EDITAR_COZINHAS', 'Permite editar cozinhas');
-insert into permission (name, description) values ('DELETAR_COZINHAS', 'Permite deletar cozinhas');
+insert into permission (id, name, description) values (1, 'CONSULTAR_COZINHAS', 'Permite consultar cozinhas');
+insert into permission (id, name, description) values (2, 'EDITAR_COZINHAS', 'Permite editar cozinhas');
+insert into permission (id, name, description) values (3, 'DELETAR_COZINHAS', 'Permite deletar cozinhas');
 
-insert into team(name) values ("Users");
-insert into team(name) values ("Clients");
+insert into team(id, name) values (1, 'Admin'), (2, 'User'), (3, 'recorder');
 
-insert into team_permission(team_id, permission_id) values(1,2);
+insert into team_permission(team_id, permission_id) values(1,1), (1,2), (1,3), (2,1), (3, 1), (3,2);
 
 insert into `user` (name, email, password, registration_date) values ("Maria", "maria@xyz.com", "333", utc_timestamp);
 insert into `user` (name, email, password, registration_date) values ("José", "jose@xyz.com", "444", utc_timestamp);
