@@ -1,6 +1,5 @@
 package com.github.ludmylla.foodapi.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
