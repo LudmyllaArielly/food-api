@@ -108,6 +108,18 @@ public class RestaurantService {
         restaurant.addFormOfPayment(formOfPayment);
     }
 
+    @Transactional
+    public void open(Long restaurantId){
+        Restaurant restaurant = findById(restaurantId);
+        restaurant.open();
+    }
+
+    @Transactional
+    public void close(Long restaurantId){
+        Restaurant restaurant = findById(restaurantId);
+        restaurant.close();
+    }
+
     public Restaurant partialUpdate(Long id, Map<String, Object> fields, HttpServletRequest request){
         Restaurant restaurantActual =  findById(id);
         merge(fields, restaurantActual,request);

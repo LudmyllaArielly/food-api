@@ -76,6 +76,19 @@ public class RestaurantController {
         return ResponseEntity.noContent().build();
     }
 
+
+    @PutMapping("/{restaurantId}/open")
+    public ResponseEntity<Void> openRestaurant(@PathVariable Long restaurantId){
+        restaurantService.open(restaurantId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{restaurantId}/close")
+    public ResponseEntity<Void> closeRestaurant(@PathVariable Long restaurantId){
+        restaurantService.close(restaurantId);
+        return ResponseEntity.noContent().build();
+    }
+
     @PatchMapping("/{id}")
     public ResponseEntity<?> partialUpdate(@PathVariable Long id, @RequestBody Map<String, Object> fields, HttpServletRequest request){
         Restaurant restaurant = restaurantService.partialUpdate(id, fields, request);

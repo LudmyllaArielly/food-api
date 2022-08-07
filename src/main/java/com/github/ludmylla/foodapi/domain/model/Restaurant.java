@@ -46,28 +46,38 @@ public class Restaurant {
     @Embedded
     private Address address;
 
+    private Boolean open = Boolean.FALSE;
+
     @ManyToMany
     @JoinTable(name = "restaurant_form_of_payment",
-    joinColumns = @JoinColumn(name = "restaurant_id"),
-    inverseJoinColumns = @JoinColumn(name = "form_of_payment_id"))
+            joinColumns = @JoinColumn(name = "restaurant_id"),
+            inverseJoinColumns = @JoinColumn(name = "form_of_payment_id"))
     private Set<FormOfPayment> formOfPayments = new HashSet<>();
 
     @OneToMany(mappedBy = "restaurant")
     private List<Product> products = new ArrayList<>();
 
-    public void activated(){
+    public void activated() {
         setActivated(true);
     }
 
-    public void inactivated(){
+    public void inactivated() {
         setActivated(false);
     }
 
-    public boolean removeFormOfPayment(FormOfPayment formOfPayment){
+    public boolean removeFormOfPayment(FormOfPayment formOfPayment) {
         return getFormOfPayments().remove(formOfPayment);
     }
 
-    public boolean addFormOfPayment(FormOfPayment formOfPayment){
+    public boolean addFormOfPayment(FormOfPayment formOfPayment) {
         return getFormOfPayments().add(formOfPayment);
+    }
+
+    public void open(){
+        setOpen(true);
+    }
+
+    public void close(){
+        setOpen(false);
     }
 }
