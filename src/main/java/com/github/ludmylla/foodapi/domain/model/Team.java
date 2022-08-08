@@ -27,4 +27,12 @@ public class Team {
     inverseJoinColumns = @JoinColumn(name = "permission_id"))
     private Set<Permission> permission = new HashSet<>();
 
+    public boolean addPermission(Permission permission){
+        return getPermission().add(permission);
+    }
+
+    public boolean removePermission(Permission permission){
+        return getPermission().remove(permission);
+    }
+
 }
