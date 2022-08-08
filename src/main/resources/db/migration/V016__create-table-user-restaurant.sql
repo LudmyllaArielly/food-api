@@ -9,4 +9,4 @@ alter table restaurant_user_responsible add constraint fk_restaurant_user_restau
 foreign key (restaurant_id) references restaurant (id);
 
 alter table restaurant_user_responsible add constraint fk_restaurant_user_user
-foreign key (user_id) references `user` (id);
+foreign key (user_id) references user (id);
