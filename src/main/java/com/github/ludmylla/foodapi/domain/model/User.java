@@ -5,10 +5,9 @@ import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Data
@@ -32,7 +31,7 @@ public class User {
     @JoinTable(name = "user_team",
     joinColumns = @JoinColumn(name = "user_id"),
     inverseJoinColumns = @JoinColumn(name = "team_id"))
-    private List<Team> teams = new ArrayList<>();
+    private Set<Team> teams = new HashSet<>();
 
     public boolean passwordMatchesWith(String password){
         return getPassword().equals(password);
@@ -40,6 +39,14 @@ public class User {
 
     public boolean passwordDoesNotMatch(String password){
         return !passwordMatchesWith(password);
+    }
+
+    public boolean addTeam(Team team){
+        return getTeams().add(team);
+    }
+
+    public boolean removeTeam(Team team){
+        return getTeams().remove(team);
     }
 
 }
