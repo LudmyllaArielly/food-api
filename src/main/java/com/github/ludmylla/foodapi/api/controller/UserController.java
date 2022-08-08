@@ -51,6 +51,7 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<UserModel> update(@PathVariable Long id, @RequestBody @Valid UserInputModel userInput){
         User user = userInputDisassembler.toDomainModel(userInput);
+        userInputDisassembler.copyToDomainObject(userInput, user);
         User userUpdate = userService.update(id, user);
         return ResponseEntity.ok(userModelAssembler.toModel(userUpdate));
     }
