@@ -4,11 +4,8 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.ludmylla.foodapi.api.assembler.RestaurantInputDisassembler;
 import com.github.ludmylla.foodapi.core.validation.ValidationException;
-import com.github.ludmylla.foodapi.domain.model.FormOfPayment;
+import com.github.ludmylla.foodapi.domain.model.*;
 import com.github.ludmylla.foodapi.domain.service.exceptions.RestaurantNofFoundException;
-import com.github.ludmylla.foodapi.domain.model.City;
-import com.github.ludmylla.foodapi.domain.model.Kitchen;
-import com.github.ludmylla.foodapi.domain.model.Restaurant;
 import com.github.ludmylla.foodapi.domain.repository.RestaurantRepository;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.BeanUtils;
@@ -39,6 +36,9 @@ public class RestaurantService {
 
     @Autowired
     private CityService cityService;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private FormOfPaymentService formOfPaymentService;
@@ -90,6 +90,20 @@ public class RestaurantService {
     public void inactivated(Long id){
         Restaurant restaurantActual = findById(id);
         restaurantActual.inactivated();
+    }
+
+    @Transactional
+    public void addResponsible(Long restaurantId, Long userId){
+        Restaurant restaurant = findById(restaurantId);
+        User user = userService.findById(userId);
+        restaurant.addResponsible(user);
+    }
+
+    @Transactional
+    public void removeResponsible(Long restaurantId, Long userId){
+        Restaurant restaurant = findById(restaurantId);
+        User user = userService.findById(userId);
+        restaurant.removeResponsible(user);
     }
 
     @Transactional
