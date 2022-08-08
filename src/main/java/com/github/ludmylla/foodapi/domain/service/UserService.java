@@ -1,5 +1,6 @@
 package com.github.ludmylla.foodapi.domain.service;
 
+import com.github.ludmylla.foodapi.domain.model.Team;
 import com.github.ludmylla.foodapi.domain.model.User;
 import com.github.ludmylla.foodapi.domain.repository.UserRepository;
 import com.github.ludmylla.foodapi.domain.service.exceptions.BusinessException;
@@ -14,9 +15,11 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private TeamService teamService;
 
     @Transactional
     public User create(User user){
@@ -59,6 +62,20 @@ public class UserService {
         findById(id);
         userRepository.deleteById(id);
         userRepository.flush();
+    }
+
+    @Transactional
+    public void addTeam(Long userId, Long teamId){
+        User user = findById(userId);
+        Team team = teamService.findById(teamId);
+        user.addTeam(team);
+    }
+
+    @Transactional
+    public void removeTeam(Long userId, Long teamId){
+        User user = findById(userId);
+        Team team = teamService.findById(teamId);
+        user.removeTeam(team);
     }
 
     private void checksIfTheUserEmailAlreadyExists(User user){
