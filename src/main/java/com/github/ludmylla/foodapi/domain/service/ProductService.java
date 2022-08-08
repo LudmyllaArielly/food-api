@@ -33,12 +33,12 @@ public class ProductService {
     }
 
     public Product findByIdRestaurant(Long restaurantId, Long productId){
-        return productRepository.findById(productId, restaurantId)
+        return productRepository.findById(restaurantId, productId)
                 .orElseThrow(() -> new ProductNotFoundException(productId, restaurantId));
     }
 
     @Transactional
-    public Product update(Long productId, Long restaurantId, Product product){
+    public Product update(Long restaurantId, Long productId, Product product){
         Product productActual = findByIdRestaurant(restaurantId, productId);
         product.setId(productActual.getId());
         return productRepository.save(product);
