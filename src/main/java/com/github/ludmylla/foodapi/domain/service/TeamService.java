@@ -1,5 +1,6 @@
 package com.github.ludmylla.foodapi.domain.service;
 
+import com.github.ludmylla.foodapi.domain.model.Permission;
 import com.github.ludmylla.foodapi.domain.service.exceptions.EntityInUseException;
 import com.github.ludmylla.foodapi.domain.service.exceptions.TeamNotFoundException;
 import com.github.ludmylla.foodapi.domain.model.Team;
@@ -19,6 +20,9 @@ public class TeamService {
 
     @Autowired
     private TeamRepository teamRepository;
+
+    @Autowired
+    private PermissionService permissionService;
 
     @Transactional
     public Team create(Team team){
@@ -53,5 +57,19 @@ public class TeamService {
         }catch (DataIntegrityViolationException e) {
             throw new EntityInUseException(String.format(MSG_TEAM_IN_USE, id));
         }
+    }
+
+    @Transactional
+    public void addPermission(Long teamId, Long permissionId){
+        Team team = findById(teamId);
+        Permission permission = permissionService.findById(permissionId);
+        team.addPermission(permission);
+    }
+
+    @Transactional
+    public void removePermission(Long teamId, Long permissionId){
+        Team team = findById(teamId);
+        Permission permission = permissionService.findById(permissionId);
+        team.removePermission(permission);
     }
 }
