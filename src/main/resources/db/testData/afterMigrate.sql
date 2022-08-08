@@ -45,8 +45,8 @@ insert into team(id, name) values (1, 'Admin'), (2, 'User'), (3, 'recorder');
 
 insert into team_permission(team_id, permission_id) values(1,1), (1,2), (1,3), (2,1), (3, 1), (3,2);
 
-insert into `user` (name, email, password, registration_date) values ("Maria", "maria@xyz.com", "333", utc_timestamp);
-insert into `user` (name, email, password, registration_date) values ("José", "jose@xyz.com", "444", utc_timestamp);
+insert into user (id, name, email, password, registration_date) values (1, "Maria", "maria@xyz.com", "333", utc_timestamp);
+insert into user (id, name, email, password, registration_date) values (2, "Jones", "jones@xyz.com", "444", utc_timestamp);
 
 insert into user_team(user_id, team_id) values (1,1), (2,2);
 
@@ -65,6 +65,8 @@ insert into restaurant (id,address_zip_code, address_public_place, address_numbe
 insert into restaurant (id,address_zip_code, address_public_place, address_number,address_complement, address_district, address_city_id, name, freight_rate, kitchen_id, registration_date, update_date, activated, `open`) values (5,"78456000", "Rua José Freire", "123", "Apto. 45", "Centro",2, "Bar da Maria", 6.00, 2, utc_timestamp, utc_timestamp, true, true);
 
 insert into restaurant_form_of_payment(restaurant_id, form_of_payment_id) values (1,1),(1,2), (2,4), (2,3), (3,2), (3,4), (4,1), (4,3), (4,4);
+
+insert into restaurant_user_responsible (restaurant_id, user_id) values (1, 2), (3, 2);
 
 insert into product (name, description, price, active, restaurant_id) values ("Pudim de Laranja", "Lorem ipsum dolor sit amet.", 7.99, true, 1);
 insert into product (name, description, price, active, restaurant_id) values ("Pudim de Chocolate", "Lorem ipsum dolor sit amet.", 9.99, false, 1);
