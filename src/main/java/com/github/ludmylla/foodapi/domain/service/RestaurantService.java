@@ -93,6 +93,16 @@ public class RestaurantService {
     }
 
     @Transactional
+    public void activated (List<Long> restaurantIds){
+        restaurantIds.forEach(this::activated);
+    }
+
+    @Transactional
+    public void inactivated (List<Long> restaurantIds){
+        restaurantIds.forEach(this::inactivated);
+    }
+
+    @Transactional
     public void addResponsible(Long restaurantId, Long userId){
         Restaurant restaurant = findById(restaurantId);
         User user = userService.findById(userId);

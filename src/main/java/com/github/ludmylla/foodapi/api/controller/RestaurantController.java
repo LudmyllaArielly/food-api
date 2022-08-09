@@ -9,6 +9,7 @@ import com.github.ludmylla.foodapi.domain.service.exceptions.CityNotFoundExcepti
 import com.github.ludmylla.foodapi.domain.service.exceptions.KitchenNotFoundException;
 import com.github.ludmylla.foodapi.domain.model.Restaurant;
 import com.github.ludmylla.foodapi.domain.service.RestaurantService;
+import com.github.ludmylla.foodapi.domain.service.exceptions.RestaurantNofFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -76,6 +77,25 @@ public class RestaurantController {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping("/activations")
+    public ResponseEntity<Void> activatedMultiple (@RequestBody List<Long> restaurantIds){
+        try {
+            restaurantService.activated(restaurantIds);
+            return ResponseEntity.noContent().build();
+        }catch (RestaurantNofFoundException ex){
+            throw new BusinessException(ex.getMessage(), ex);
+        }
+    }
+
+    @DeleteMapping("/inactivation")
+    public ResponseEntity<Void> inactivationMultiple (@RequestBody List<Long> restaurantIds){
+        try {
+            restaurantService.inactivated(restaurantIds);
+            return ResponseEntity.noContent().build();
+        }catch (RestaurantNofFoundException ex){
+            throw new BusinessException(ex.getMessage(), ex);
+        }
+    }
 
     @PutMapping("/{restaurantId}/open")
     public ResponseEntity<Void> openRestaurant(@PathVariable Long restaurantId){

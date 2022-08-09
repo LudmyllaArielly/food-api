@@ -12,6 +12,7 @@ delete from team;
 delete from team_permission;
 delete from user;
 delete from user_team;
+delete from restaurant_user_responsible;
 
 set foreign_key_checks=1;
 
