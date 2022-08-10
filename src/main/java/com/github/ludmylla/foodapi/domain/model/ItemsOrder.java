@@ -32,5 +32,19 @@ public class ItemsOrder {
     @JoinColumn(name = "order_id" , nullable = false)
     private Order order;
 
+    public void computeTotalPrice(){
+        BigDecimal unitPrice = this.getUnitPrice();
+        Integer quantity = this.getQuantity();
+
+        if(unitPrice == null){
+            unitPrice = BigDecimal.ZERO;
+        }
+
+        if(quantity == null){
+            quantity = 0;
+        }
+
+        this.setTotalPrice(unitPrice.multiply(new BigDecimal(quantity)));
+    }
 
 }
