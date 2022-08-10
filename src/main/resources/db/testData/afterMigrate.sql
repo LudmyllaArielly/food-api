@@ -84,7 +84,7 @@ insert into product (id ,name, description, price, active, restaurant_id) values
 insert into product (id, name, description, price, active, restaurant_id) values (7, "Marmita X", "Lorem ipsum dolor sit amet.", 13.90, true, 5);
 
 
-insert into `order` (id, subtotal, freight_rate, price_total, status, creation_date, user_client_id, form_of_payment_id, restaurant_id, address_zip_code, address_public_place, address_number, address_complement, address_district, address_city_id) values (1, 26.50, 10.00, 36.50, 'CREATED', utc_timestamp, 1, 1, 2, '74123000', 'Rua Jones 14', '458', 'Apt. 45', 'Setor 1', 3);
+insert into `order` (id, subtotal, freight_rate, price_total, status, creation_date, user_client_id, form_of_payment_id, restaurant_id, address_zip_code, address_public_place, address_number, address_complement, address_district, address_city_id) values (1, 26.50, 10.00, 36.50, 'DELIVERED', utc_timestamp, 1, 1, 2, '74123000', 'Rua Jones 14', '458', 'Apt. 45', 'Setor 1', 3);
 
 insert into items_order (id, quantity, unit_price, total_price, observation, product_id, order_id) values (1, 2, 7.00, 14.00, 'Loren', 4, 1);
 
