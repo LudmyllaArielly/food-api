@@ -41,6 +41,7 @@ public class ProductService {
     public Product update(Long restaurantId, Long productId, Product product){
         Product productActual = findByIdRestaurant(restaurantId, productId);
         product.setId(productActual.getId());
+        product.setRestaurant(productActual.getRestaurant());
         return productRepository.save(product);
     }
 }
