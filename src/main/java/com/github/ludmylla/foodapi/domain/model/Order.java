@@ -51,22 +51,16 @@ public class Order {
     @JoinColumn(name = "restaurant_id" ,nullable = false)
     private Restaurant restaurant;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade =  CascadeType.ALL)
     private List<ItemsOrder> itemsOrders = new ArrayList<>();
 
     public void computePriceTotal() {
+        getItemsOrders().forEach(ItemsOrder::computeTotalPrice);
+
         this.subtotal = getItemsOrders().stream()
                 .map(item -> item.getTotalPrice())
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
         this.priceTotal = this.subtotal.add(this.freightRate);
-    }
-
-    public void defineFreightRate(){
-        setFreightRate(getRestaurant().getFreightRate());
-    }
-
-    public void assignOrdersToOItems(){
-        getItemsOrders().forEach(item -> item.setOrder(this));
     }
 
 }
