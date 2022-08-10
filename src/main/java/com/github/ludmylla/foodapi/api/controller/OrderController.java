@@ -2,7 +2,9 @@ package com.github.ludmylla.foodapi.api.controller;
 
 
 import com.github.ludmylla.foodapi.api.assembler.OrderModelAssembler;
+import com.github.ludmylla.foodapi.api.assembler.OrderResumeModelAssembler;
 import com.github.ludmylla.foodapi.domain.dtos.OrderModel;
+import com.github.ludmylla.foodapi.domain.dtos.OrderResumeModel;
 import com.github.ludmylla.foodapi.domain.model.Order;
 import com.github.ludmylla.foodapi.domain.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +26,13 @@ public class OrderController {
     @Autowired
     private OrderModelAssembler orderModelAssembler;
 
+    @Autowired
+    private OrderResumeModelAssembler orderResumeModelAssembler;
+
     @GetMapping
-    public ResponseEntity<List<OrderModel>> findAll(){
+    public ResponseEntity<List<OrderResumeModel>> findAll(){
         List<Order> list = orderService.findAll();
-        return ResponseEntity.ok(orderModelAssembler.toCollectionModel(list));
+        return ResponseEntity.ok(orderResumeModelAssembler.toCollectionModel(list));
     }
 
     @GetMapping("/{orderId}")
