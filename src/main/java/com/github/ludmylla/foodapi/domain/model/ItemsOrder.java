@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Data
 @Entity
+@Table(name = "items_order")
 public class ItemsOrder {
 
     @EqualsAndHashCode.Include
@@ -28,7 +29,7 @@ public class ItemsOrder {
     private Product product;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "order_id" , nullable = false)
     private Order order;
 
 
