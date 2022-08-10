@@ -43,7 +43,7 @@ public class Order {
     @JoinColumn(name = "user_client_id", nullable = false)
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "form_of_payment_id" ,nullable = false)
     private FormOfPayment formOfPayment;
 
