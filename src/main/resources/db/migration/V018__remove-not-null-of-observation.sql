@@ -1,0 +1,1 @@
+ALTER TABLE items_order MODIFY COLUMN observation VARCHAR(80) NULL;
