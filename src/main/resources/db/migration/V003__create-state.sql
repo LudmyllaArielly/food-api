@@ -4,7 +4,7 @@ create table state(
     primary key (id)
 )engine=InnoDB default charset=utf8;
 
-insert into foodapi.state (name) select distinct name_state from city;
+insert into state (name) select distinct name_state from city;
 
 alter table city add column state_id bigint not null;
 
