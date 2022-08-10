@@ -94,4 +94,13 @@ public class Restaurant {
     public boolean removeResponsible (User user){
         return getResponsible().remove(user);
     }
+
+    public boolean acceptFormOfPayment(FormOfPayment formOfPayment){
+        return getFormOfPayments().contains(formOfPayment);
+    }
+
+    public boolean doNotAcceptFormOfPayment(FormOfPayment formOfPayment){
+        return !acceptFormOfPayment(formOfPayment);
+    }
+
 }
