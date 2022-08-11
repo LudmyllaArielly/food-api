@@ -1,9 +1,11 @@
 package com.github.ludmylla.foodapi.api.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.github.ludmylla.foodapi.api.assembler.RestaurantInputDisassembler;
 import com.github.ludmylla.foodapi.api.assembler.RestaurantModelAssembler;
 import com.github.ludmylla.foodapi.domain.dtos.RestaurantModel;
 import com.github.ludmylla.foodapi.domain.dtos.input.RestaurantInputModel;
+import com.github.ludmylla.foodapi.domain.dtos.view.RestaurantView;
 import com.github.ludmylla.foodapi.domain.service.exceptions.BusinessException;
 import com.github.ludmylla.foodapi.domain.service.exceptions.CityNotFoundException;
 import com.github.ludmylla.foodapi.domain.service.exceptions.KitchenNotFoundException;
@@ -13,6 +15,7 @@ import com.github.ludmylla.foodapi.domain.service.exceptions.RestaurantNofFoundE
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,10 +46,17 @@ public class RestaurantController {
        }
     }
 
-    @GetMapping
+    @JsonView(RestaurantView.Resume.class)
+    @GetMapping("/resume")
     public ResponseEntity<List<RestaurantModel>> findAll(){
         List<Restaurant> list = restaurantService.findAll();
         return ResponseEntity.ok(modelAssembler.toCollectionModel(list));
+    }
+
+    @JsonView(RestaurantView.NameId.class)
+    @GetMapping
+    public ResponseEntity<List<RestaurantModel>> findAllByNameAndId(){
+        return findAll();
     }
 
     @GetMapping("/{id}")
