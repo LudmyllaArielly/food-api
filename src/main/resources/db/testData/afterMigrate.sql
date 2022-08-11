@@ -84,12 +84,12 @@ insert into product (id ,name, description, price, active, restaurant_id) values
 insert into product (id, name, description, price, active, restaurant_id) values (7, "Marmita X", "Lorem ipsum dolor sit amet.", 13.90, true, 5);
 
 
-insert into `order` (id, subtotal, freight_rate, price_total, status, creation_date, user_client_id, form_of_payment_id, restaurant_id, address_zip_code, address_public_place, address_number, address_complement, address_district, address_city_id) values (1, 26.50, 10.00, 36.50, 'DELIVERED', utc_timestamp, 1, 1, 2, '74123000', 'Rua Jones 14', '458', 'Apt. 45', 'Setor 1', 3);
+insert into `order` (id, code, subtotal, freight_rate, price_total, status, creation_date, user_client_id, form_of_payment_id, restaurant_id, address_zip_code, address_public_place, address_number, address_complement, address_district, address_city_id) values (1, '538c61c3-69c8-4d0b-ae20-a75ce111fa32', 26.50, 10.00, 36.50, 'DELIVERED', utc_timestamp, 1, 1, 2, '74123000', 'Rua Jones 14', '458', 'Apt. 45', 'Setor 1', 3);
 
 insert into items_order (id, quantity, unit_price, total_price, observation, product_id, order_id) values (1, 2, 7.00, 14.00, 'Loren', 4, 1);
 
 insert into items_order (id, quantity, unit_price, total_price, observation, product_id, order_id) values (2, 1, 12.50, 12.50, 'Loren', 3, 1);
 
-insert into `order` (id, subtotal, freight_rate, price_total, status, creation_date, user_client_id, form_of_payment_id, restaurant_id, address_zip_code, address_public_place, address_number, address_complement, address_district, address_city_id) values (2, 13.90, 10.00, 23.90, 'CREATED', utc_timestamp, 2, 1, 3, '78456000', 'Rua Jp 52', '78', 'Apt. 12', 'Setor 3', 2);
+insert into `order` (id, code, subtotal, freight_rate, price_total, status, creation_date, user_client_id, form_of_payment_id, restaurant_id, address_zip_code, address_public_place, address_number, address_complement, address_district, address_city_id) values (2, '18e0b238-5f9c-458a-a157-beeabb3d458e', 13.90, 10.00, 23.90, 'CREATED', utc_timestamp, 2, 1, 3, '78456000', 'Rua Jp 52', '78', 'Apt. 12', 'Setor 3', 2);
 
 insert into items_order (id, quantity, unit_price, total_price, observation, product_id, order_id) values (3, 1, 13.90, 13.90, 'Loren', 7, 2);
