@@ -7,11 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class OrderNotFoundException extends EntityNotFoundException{
     private static final long serialVersionUID = 1L;
 
-    public OrderNotFoundException(String message){
-        super(message);
-    }
-
-    public OrderNotFoundException(Long id) {
-        this(String.format("There is no code order %d" ,id));
+    public OrderNotFoundException(String code) {
+        super(String.format("There is no code order %s" ,code));
     }
 }
