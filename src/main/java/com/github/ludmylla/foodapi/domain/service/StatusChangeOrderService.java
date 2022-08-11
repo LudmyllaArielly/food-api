@@ -12,25 +12,25 @@ public class StatusChangeOrderService {
     private OrderService orderService;
 
     @Transactional
-    public void confirm(Long orderId){
-        Order order = verifyIfOrderExist(orderId);
+    public void confirm(String codeId){
+        Order order = verifyIfOrderExist(codeId);
         order.confirmOrder();
     }
 
     @Transactional
-    public void cancel(Long orderId){
-        Order order = verifyIfOrderExist(orderId);
+    public void cancel(String codeId){
+        Order order = verifyIfOrderExist(codeId);
         order.cancelOrder();
     }
 
     @Transactional
-    public void delivery(Long orderId){
-        Order order = verifyIfOrderExist(orderId);
+    public void delivery(String codeId){
+        Order order = verifyIfOrderExist(codeId);
         order.deliveryOrder();
     }
 
-    private Order verifyIfOrderExist(Long orderId){
-       return orderService.findById(orderId);
+    private Order verifyIfOrderExist(String codeId){
+       return orderService.findById(codeId);
     }
 
 }

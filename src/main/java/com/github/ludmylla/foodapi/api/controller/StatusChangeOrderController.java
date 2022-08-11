@@ -9,27 +9,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/orders/{orderId}")
+@RequestMapping("/orders/{codeId}")
 public class StatusChangeOrderController {
 
     @Autowired
     private StatusChangeOrderService statusChangeOrderService;
 
     @PutMapping("/confirm")
-    public ResponseEntity<Void> confirm(@PathVariable Long orderId){
-        statusChangeOrderService.confirm(orderId);
+    public ResponseEntity<Void> confirm(@PathVariable String codeId){
+        statusChangeOrderService.confirm(codeId);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/cancel")
-    public ResponseEntity<Void> cancel(@PathVariable Long orderId){
-        statusChangeOrderService.cancel(orderId);
+    public ResponseEntity<Void> cancel(@PathVariable String codeId){
+        statusChangeOrderService.cancel(codeId);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/delivery")
-    public ResponseEntity<Void> delivery(@PathVariable Long orderId){
-        statusChangeOrderService.delivery(orderId);
+    public ResponseEntity<Void> delivery(@PathVariable String codeId){
+        statusChangeOrderService.delivery(codeId);
         return ResponseEntity.noContent().build();
     }
 

@@ -51,9 +51,9 @@ public class OrderController {
         return ResponseEntity.ok(orderResumeModelAssembler.toCollectionModel(list));
     }
 
-    @GetMapping("/{orderId}")
-    public ResponseEntity<OrderModel> findById(@PathVariable Long orderId){
-        Order order = orderService.findById(orderId);
+    @GetMapping("/{code}")
+    public ResponseEntity<OrderModel> findById(@PathVariable String code){
+        Order order = orderService.findById(code);
         return ResponseEntity.ok(orderModelAssembler.toModel(order));
     }
 

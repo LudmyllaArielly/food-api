@@ -35,9 +35,9 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
-    public Order findById(Long orderId){
-        return orderRepository.findById(orderId)
-                .orElseThrow(() -> new OrderNotFoundException(orderId));
+    public Order findById(String code){
+        return orderRepository.findByCode(code)
+                .orElseThrow(() -> new OrderNotFoundException(code));
     }
 
     @Transactional
