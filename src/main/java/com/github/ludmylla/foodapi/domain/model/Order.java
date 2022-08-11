@@ -1,12 +1,12 @@
 package com.github.ludmylla.foodapi.domain.model;
 
+import com.github.ludmylla.foodapi.domain.service.exceptions.BusinessException;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,4 +63,27 @@ public class Order {
         this.priceTotal = this.subtotal.add(this.freightRate);
     }
 
+    public void confirmOrder(){
+        setStatus(OrderStatus.CONFIRMED);
+        setConfirmationDate(OffsetDateTime.now());
+    }
+
+    public void deliveryOrder(){
+        setStatus(OrderStatus.DELIVERED);
+        setDeliveryDate(OffsetDateTime.now());
+    }
+
+    public void cancelOrder(){
+        setStatus(OrderStatus.CANCELED);
+        setCancellationDate(OffsetDateTime.now());
+    }
+
+    private void setStatus(OrderStatus newStatus){
+        if(getStatus().cannotChangeTo(newStatus)){
+            throw new BusinessException(String.format("Order status %d cannot be changed from %s to %s", getId(), getStatus().getDescription(),
+                   newStatus.getDescription()));
+        }
+
+        this.status = newStatus;
+    }
 }
