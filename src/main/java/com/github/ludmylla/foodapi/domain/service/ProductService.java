@@ -20,15 +20,19 @@ public class ProductService {
     private RestaurantService restaurantService;
 
     @Transactional
-    public Product create(Long restaurantId,Product product){
+    public Product create(Long restaurantId, Product product){
         Restaurant restaurant = restaurantService.findById(restaurantId);
         product.setRestaurant(restaurant);
         return productRepository.save(product);
     }
 
-    public List<Product> findAllByRestaurant(Long restaurantId){
+    public List<Product> findAllProductByRestaurant(Long restaurantId, Boolean includeInactive){
         Restaurant restaurant = restaurantService.findById(restaurantId);
-        return productRepository.findByRestaurant(restaurant);
+        if(includeInactive == true) {
+            return productRepository.findByRestaurant(restaurant);
+        }else {
+            return productRepository.findActivesByRestaurant(restaurant);
+        }
     }
 
     public Product findByIdRestaurant(Long restaurantId, Long productId){
