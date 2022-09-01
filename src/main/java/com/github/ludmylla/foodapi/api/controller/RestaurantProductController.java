@@ -53,7 +53,7 @@ public class RestaurantProductController {
     @PutMapping("/{productId}")
     public ResponseEntity<ProductModel> update(@PathVariable Long restaurantId, @PathVariable Long productId, @RequestBody @Valid ProductInputModel productInput){
         Product product = productInputDisassembler.toDomainModel(productInput);
-        product = productService.update(productId, restaurantId, product);
+        product = productService.update(restaurantId, productId, product);
         return ResponseEntity.ok(productModelAssembler.toModel(product));
     }
 }
