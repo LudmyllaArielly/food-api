@@ -50,6 +50,25 @@ public class OrderController {
         List<Order> list = orderService.findAll();
         return ResponseEntity.ok(orderResumeModelAssembler.toCollectionModel(list));
     }
+/*
+    @GetMapping("/filter")
+    public ResponseEntity<MappingJacksonValue> findAllMapping(@RequestParam(required = false) String field){
+        List<Order> list = orderService.findAll();
+        List<OrderResumeModel> ordersModel = orderResumeModelAssembler.toCollectionModel(list);
+
+        MappingJacksonValue ordersWrapper = new MappingJacksonValue(ordersModel);
+
+        SimpleFilterProvider filterProvider = new SimpleFilterProvider();
+        filterProvider.addFilter("orderFilter", SimpleBeanPropertyFilter.serializeAll());
+
+        if(StringUtils.isNotBlank(field)){
+            filterProvider.addFilter("orderFilter", SimpleBeanPropertyFilter.filterOutAllExcept(field.split(",")));
+        }
+
+        ordersWrapper.setFilters(filterProvider);
+
+        return ResponseEntity.ok(ordersWrapper);
+    }*/
 
     @GetMapping("/{code}")
     public ResponseEntity<OrderModel> findById(@PathVariable String code){
