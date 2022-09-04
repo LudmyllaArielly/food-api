@@ -9,6 +9,9 @@ import com.github.ludmylla.foodapi.domain.dtos.OrderResumeModel;
 import com.github.ludmylla.foodapi.domain.dtos.input.OrderInputModel;
 import com.github.ludmylla.foodapi.domain.model.Order;
 import com.github.ludmylla.foodapi.domain.model.User;
+import com.github.ludmylla.foodapi.domain.repository.OrderRepository;
+import com.github.ludmylla.foodapi.domain.repository.filter.OrderFilter;
+import com.github.ludmylla.foodapi.domain.repository.spec.OrderSpecs;
 import com.github.ludmylla.foodapi.domain.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +27,9 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private OrderRepository orderRepository;
 
     @Autowired
     private OrderModelAssembler orderModelAssembler;
@@ -46,8 +52,8 @@ public class OrderController {
     }
 
     @GetMapping
-    public ResponseEntity<List<OrderResumeModel>> findAll(){
-        List<Order> list = orderService.findAll();
+    public ResponseEntity<List<OrderResumeModel>> search(OrderFilter filter){
+        List<Order> list = orderRepository.findAll(OrderSpecs.usingFilter(filter));
         return ResponseEntity.ok(orderResumeModelAssembler.toCollectionModel(list));
     }
 /*

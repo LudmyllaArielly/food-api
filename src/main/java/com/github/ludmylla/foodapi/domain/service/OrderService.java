@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Service
 public class OrderService {
 
@@ -30,10 +28,6 @@ public class OrderService {
 
     @Autowired
     private ProductService productService;
-
-    public List<Order> findAll(){
-        return orderRepository.findAll();
-    }
 
     public Order findById(String code){
         return orderRepository.findByCode(code)
