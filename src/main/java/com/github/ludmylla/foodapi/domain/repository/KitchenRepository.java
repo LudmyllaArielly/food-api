@@ -13,6 +13,8 @@ public interface KitchenRepository extends JpaRepository<Kitchen, Long> {
 
     List<Kitchen> findByNameContaining(String name);
 
+    // Page<Kitchen> findByNameContaining(String name, Pageable pageable);
+
     boolean existsByName(String name);
 
 }
