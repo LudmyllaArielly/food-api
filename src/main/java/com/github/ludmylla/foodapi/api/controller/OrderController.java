@@ -14,6 +14,10 @@ import com.github.ludmylla.foodapi.domain.repository.filter.OrderFilter;
 import com.github.ludmylla.foodapi.domain.repository.spec.OrderSpecs;
 import com.github.ludmylla.foodapi.domain.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -52,9 +56,15 @@ public class OrderController {
     }
 
     @GetMapping
-    public ResponseEntity<List<OrderResumeModel>> search(OrderFilter filter){
-        List<Order> list = orderRepository.findAll(OrderSpecs.usingFilter(filter));
-        return ResponseEntity.ok(orderResumeModelAssembler.toCollectionModel(list));
+    public ResponseEntity<Page<OrderResumeModel>> search(OrderFilter filter, @PageableDefault(size = 10)Pageable pageable){
+        Page<Order> orderPage = orderRepository.findAll(OrderSpecs.usingFilter(filter), pageable);
+        List<OrderResumeModel> orderResumeModels = orderResumeModelAssembler
+                .toCollectionModel(orderPage.getContent());
+
+        Page<OrderResumeModel> orderResumeModelPage = new PageImpl<>(
+                orderResumeModels, pageable, orderPage.getTotalElements());
+
+        return ResponseEntity.ok(orderResumeModelPage);
     }
 /*
     @GetMapping("/filter")

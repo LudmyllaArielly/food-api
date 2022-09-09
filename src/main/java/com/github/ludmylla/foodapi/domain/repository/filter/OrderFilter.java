@@ -8,7 +8,9 @@ import java.time.OffsetDateTime;
 
 @Getter
 @Setter
-public class OrderFilter {
+public class
+
+OrderFilter {
 
     private Long userId;
     private Long restaurantId;
