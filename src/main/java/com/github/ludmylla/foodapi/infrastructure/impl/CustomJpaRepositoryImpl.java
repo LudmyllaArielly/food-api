@@ -1,5 +1,6 @@
-package com.github.ludmylla.foodapi.domain.repository;
+package com.github.ludmylla.foodapi.infrastructure.impl;
 
+import com.github.ludmylla.foodapi.domain.repository.CustomJpaRepository;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 

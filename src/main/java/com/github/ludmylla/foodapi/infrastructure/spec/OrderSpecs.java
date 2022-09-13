@@ -1,7 +1,7 @@
-package com.github.ludmylla.foodapi.domain.repository.spec;
+package com.github.ludmylla.foodapi.infrastructure.spec;
 
 import com.github.ludmylla.foodapi.domain.model.Order;
-import com.github.ludmylla.foodapi.domain.repository.filter.OrderFilter;
+import com.github.ludmylla.foodapi.domain.filter.OrderFilter;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.Predicate;

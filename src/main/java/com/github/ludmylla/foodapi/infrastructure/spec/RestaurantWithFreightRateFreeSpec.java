@@ -1,4 +1,4 @@
-package com.github.ludmylla.foodapi.domain.repository.spec;
+package com.github.ludmylla.foodapi.infrastructure.spec;
 
 import com.github.ludmylla.foodapi.domain.model.Restaurant;
 import org.springframework.data.jpa.domain.Specification;

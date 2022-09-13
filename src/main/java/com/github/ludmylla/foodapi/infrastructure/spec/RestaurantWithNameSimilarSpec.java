@@ -1,4 +1,4 @@
-package com.github.ludmylla.foodapi.domain.repository.spec;
+package com.github.ludmylla.foodapi.infrastructure.spec;
 
 import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;

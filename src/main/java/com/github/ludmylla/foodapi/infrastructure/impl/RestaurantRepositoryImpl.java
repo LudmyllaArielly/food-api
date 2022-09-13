@@ -1,7 +1,9 @@
-package com.github.ludmylla.foodapi.domain.repository;
+package com.github.ludmylla.foodapi.infrastructure.impl;
 
 import com.github.ludmylla.foodapi.domain.model.Restaurant;
-import com.github.ludmylla.foodapi.domain.repository.spec.RestaurantSpecs;
+import com.github.ludmylla.foodapi.domain.repository.RestaurantRepository;
+import com.github.ludmylla.foodapi.domain.repository.RestaurantRepositoryQuery;
+import com.github.ludmylla.foodapi.infrastructure.spec.RestaurantSpecs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
