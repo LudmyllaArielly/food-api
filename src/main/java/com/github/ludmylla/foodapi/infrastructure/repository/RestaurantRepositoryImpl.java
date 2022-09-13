@@ -1,4 +1,4 @@
-package com.github.ludmylla.foodapi.infrastructure.impl;
+package com.github.ludmylla.foodapi.infrastructure.repository;
 
 import com.github.ludmylla.foodapi.domain.model.Restaurant;
 import com.github.ludmylla.foodapi.domain.repository.RestaurantRepository;
