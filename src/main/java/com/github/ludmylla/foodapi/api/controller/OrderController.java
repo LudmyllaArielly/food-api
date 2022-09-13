@@ -1,9 +1,9 @@
 package com.github.ludmylla.foodapi.api.controller;
 
-
 import com.github.ludmylla.foodapi.api.assembler.OrderInputDisassembler;
 import com.github.ludmylla.foodapi.api.assembler.OrderModelAssembler;
 import com.github.ludmylla.foodapi.api.assembler.OrderResumeModelAssembler;
+import com.github.ludmylla.foodapi.core.data.PageableTranslator;
 import com.github.ludmylla.foodapi.domain.dtos.OrderModel;
 import com.github.ludmylla.foodapi.domain.dtos.OrderResumeModel;
 import com.github.ludmylla.foodapi.domain.dtos.input.OrderInputModel;
@@ -13,6 +13,7 @@ import com.github.ludmylla.foodapi.domain.repository.OrderRepository;
 import com.github.ludmylla.foodapi.domain.repository.filter.OrderFilter;
 import com.github.ludmylla.foodapi.domain.repository.spec.OrderSpecs;
 import com.github.ludmylla.foodapi.domain.service.OrderService;
+import com.google.common.collect.ImmutableMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -45,7 +46,7 @@ public class OrderController {
     private OrderInputDisassembler orderInputDisassembler;
 
     @PostMapping
-    public ResponseEntity<OrderModel> create(@Valid @RequestBody OrderInputModel orderInput){
+    public ResponseEntity<OrderModel> create(@Valid @RequestBody OrderInputModel orderInput) {
         Order newOrder = orderInputDisassembler.toDomainModel(orderInput);
 
         newOrder.setUser(new User());
@@ -56,7 +57,10 @@ public class OrderController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<OrderResumeModel>> search(OrderFilter filter, @PageableDefault(size = 10)Pageable pageable){
+    public ResponseEntity<Page<OrderResumeModel>> search(OrderFilter filter, @PageableDefault(size = 10) Pageable pageable) {
+
+        pageable = translatePageable(pageable);
+
         Page<Order> orderPage = orderRepository.findAll(OrderSpecs.usingFilter(filter), pageable);
         List<OrderResumeModel> orderResumeModels = orderResumeModelAssembler
                 .toCollectionModel(orderPage.getContent());
@@ -66,30 +70,21 @@ public class OrderController {
 
         return ResponseEntity.ok(orderResumeModelPage);
     }
-/*
-    @GetMapping("/filter")
-    public ResponseEntity<MappingJacksonValue> findAllMapping(@RequestParam(required = false) String field){
-        List<Order> list = orderService.findAll();
-        List<OrderResumeModel> ordersModel = orderResumeModelAssembler.toCollectionModel(list);
-
-        MappingJacksonValue ordersWrapper = new MappingJacksonValue(ordersModel);
-
-        SimpleFilterProvider filterProvider = new SimpleFilterProvider();
-        filterProvider.addFilter("orderFilter", SimpleBeanPropertyFilter.serializeAll());
-
-        if(StringUtils.isNotBlank(field)){
-            filterProvider.addFilter("orderFilter", SimpleBeanPropertyFilter.filterOutAllExcept(field.split(",")));
-        }
-
-        ordersWrapper.setFilters(filterProvider);
-
-        return ResponseEntity.ok(ordersWrapper);
-    }*/
 
     @GetMapping("/{code}")
-    public ResponseEntity<OrderModel> findById(@PathVariable String code){
+    public ResponseEntity<OrderModel> findById(@PathVariable String code) {
         Order order = orderService.findById(code);
         return ResponseEntity.ok(orderModelAssembler.toModel(order));
+    }
+
+    private Pageable translatePageable(Pageable pageable) {
+        var mapper = ImmutableMap.of(
+                "nameUser", "user.name",
+                "code", "code",
+                "restaurant", "restaurant",
+                "priceTotal", "priceTotal");
+
+        return PageableTranslator.translate(pageable, mapper);
     }
 
 }
