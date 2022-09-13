@@ -1,4 +1,4 @@
-package com.github.ludmylla.foodapi.domain.repository.filter;
+package com.github.ludmylla.foodapi.domain.filter;
 
 import lombok.Getter;
 import lombok.Setter;
