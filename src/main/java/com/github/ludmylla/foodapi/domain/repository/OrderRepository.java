@@ -16,4 +16,5 @@ public interface OrderRepository extends JpaRepository<Order, Long>, JpaSpecific
     List<Order> findAll();
 
     Optional<Order> findByCode(String code);
+
 }
