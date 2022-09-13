@@ -88,27 +88,27 @@ insert into product (id, name, description, price, active, restaurant_id) values
 insert into product (id, name, description, price, active, restaurant_id) values (10, "Tea with sugar X", "Lorem ipsum dolor sit amet.", 9.99, true, 3);
 
 
-insert into `order` (id, code, subtotal, freight_rate, price_total, status, creation_date, user_client_id, form_of_payment_id, restaurant_id, address_zip_code, address_public_place, address_number, address_complement, address_district, address_city_id) values (1, '538c61c3-69c8-4d0b-ae20-a75ce111fa32', 26.50, 10.00, 36.50, 'DELIVERED', utc_timestamp, 1, 1, 2, '74123000', 'Rua Jones 14', '458', 'Apt. 45', 'Setor 1', 3);
+insert into `order` (id, code, subtotal, freight_rate, price_total, status, creation_date, confirmation_date, delivery_date, user_client_id, form_of_payment_id, restaurant_id, address_zip_code, address_public_place, address_number, address_complement, address_district, address_city_id) values (1, '538c61c3-69c8-4d0b-ae20-a75ce111fa32', 26.50, 10.00, 36.50, 'DELIVERED', "2022-09-13 11:10:00", "2022-09-13 11:55:00", "2022-09-13 12:25:00", 1, 1, 2, '74123000', 'Rua Jones 14', '458', 'Apt. 45', 'Setor 1', 3);
 
 insert into items_order (id, quantity, unit_price, total_price, observation, product_id, order_id) values (1, 2, 7.00, 14.00, 'Loren', 4, 1);
 
 insert into items_order (id, quantity, unit_price, total_price, observation, product_id, order_id) values (2, 1, 12.50, 12.50, 'Loren', 3, 1);
 
-insert into `order` (id, code, subtotal, freight_rate, price_total, status, creation_date, user_client_id, form_of_payment_id, restaurant_id, address_zip_code, address_public_place, address_number, address_complement, address_district, address_city_id) values (2, '18e0b238-5f9c-458a-a157-beeabb3d458e', 13.90, 10.00, 23.90, 'CREATED', utc_timestamp, 2, 1, 3, '78456000', 'Rua Jp 52', '78', 'Apt. 12', 'Setor 3', 2);
+insert into `order` (id, code, subtotal, freight_rate, price_total, status, creation_date,  confirmation_date, user_client_id, form_of_payment_id, restaurant_id, address_zip_code, address_public_place, address_number, address_complement, address_district, address_city_id) values (2, '18e0b238-5f9c-458a-a157-beeabb3d458e', 13.90, 10.00, 23.90, 'CONFIRMED', "2022-09-12 09:45:00", "2022-09-12 10:22:00", 2, 1, 3, '78456000', 'Rua Jp 52', '78', 'Apt. 12', 'Setor 3', 2);
 
 insert into items_order (id, quantity, unit_price, total_price, observation, product_id, order_id) values (3, 1, 13.90, 13.90, 'Loren', 7, 2);
 
-insert into `order` (id, code, subtotal, freight_rate, price_total, status, creation_date, user_client_id, form_of_payment_id, restaurant_id, address_zip_code, address_public_place, address_number, address_complement, address_district, address_city_id) values (3, 'd689d496-2f5b-42b0-96ac-fd5d2cf9cfd0', 62.87, 10.00, 72.87, 'CREATED', utc_timestamp, 2, 2, 3, '78452333', 'Rua 15', '74', 'Apt. 82', 'Sul 3', 2);
+insert into `order` (id, code, subtotal, freight_rate, price_total, status, creation_date, confirmation_date, user_client_id, form_of_payment_id, restaurant_id, address_zip_code, address_public_place, address_number, address_complement, address_district, address_city_id) values (3, 'd689d496-2f5b-42b0-96ac-fd5d2cf9cfd0', 62.87, 10.00, 72.87, 'CONFIRMED',  "2022-09-10 16:32:00", "2022-09-10 17:00:00", 2, 2, 3, '78452333', 'Rua 15', '74', 'Apt. 82', 'Sul 3', 2);
 
 insert into items_order (id, quantity, unit_price, total_price, observation, product_id, order_id) values (4, 1, 10.90, 10.90, 'Loren', 8, 3);
 insert into items_order (id, quantity, unit_price, total_price, observation, product_id, order_id) values (5, 2, 11.00, 22.00, 'Loren', 9, 3);
 insert into items_order (id, quantity, unit_price, total_price, observation, product_id, order_id) values (6, 3, 9.99, 29.97, 'Loren', 10, 3);
 
-insert into `order` (id, code, subtotal, freight_rate, price_total, status, creation_date, user_client_id, form_of_payment_id, restaurant_id, address_zip_code, address_public_place, address_number, address_complement, address_district, address_city_id) values (4, '1d51e6ae-28e5-4337-8eac-fc718bc62795', 14.00, 10.00, 24.00, 'CREATED', utc_timestamp, 1, 2, 2, '78452333', 'Rua 15', '74', 'Apt. 82', 'Sul 3', 2);
+insert into `order` (id, code, subtotal, freight_rate, price_total, status, creation_date, confirmation_date, user_client_id, form_of_payment_id, restaurant_id, address_zip_code, address_public_place, address_number, address_complement, address_district, address_city_id) values (4, '1d51e6ae-28e5-4337-8eac-fc718bc62795', 14.00, 10.00, 24.00, 'CONFIRMED', "2022-09-09 14:15:00",  "2022-09-09 15:20:00", 1, 2, 2, '78452333', 'Rua 15', '74', 'Apt. 82', 'Sul 3', 2);
 
 insert into items_order (id, quantity, unit_price, total_price, observation, product_id, order_id) values (7, 2, 7.00, 14.00, 'Loren', 4, 4);
 
-insert into `order` (id, code, subtotal, freight_rate, price_total, status, creation_date, user_client_id, form_of_payment_id, restaurant_id, address_zip_code, address_public_place, address_number, address_complement, address_district, address_city_id) values (5, '710412ff-7a4d-4c16-9cca-23740dba9921', 17.98, 5.00, 22.98, 'CREATED', utc_timestamp, 1, 1, 1, '78963222', 'Rua 785', '12', 'Apt. 74', 'Sul 9', 1);
+insert into `order` (id, code, subtotal, freight_rate, price_total, status, creation_date, confirmation_date, user_client_id, form_of_payment_id, restaurant_id, address_zip_code, address_public_place, address_number, address_complement, address_district, address_city_id) values (5, '710412ff-7a4d-4c16-9cca-23740dba9921', 17.98, 5.00, 22.98, 'CONFIRMED', "2022-09-11 10:00:00", "2022-09-11 11:30:00", 1, 1, 1, '78963222', 'Rua 785', '12', 'Apt. 74', 'Sul 9', 1);
 
 insert into items_order (id, quantity, unit_price, total_price, observation, product_id, order_id) values (8, 1, 7.99, 7.99, 'Loren', 1, 5);
 insert into items_order (id, quantity, unit_price, total_price, observation, product_id, order_id) values (9, 1, 9.99, 9.99, 'Loren', 2, 5);

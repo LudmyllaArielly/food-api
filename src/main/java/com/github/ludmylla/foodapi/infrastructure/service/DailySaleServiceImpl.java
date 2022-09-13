@@ -23,15 +23,19 @@ public class DailySaleServiceImpl implements DailySaleQueryService {
     private EntityManager manager;
 
     @Override
-    public List<DailySale> consultDailySales(DailySaleFilter filter) {
+    public List<DailySale> consultDailySales(DailySaleFilter filter, String timeOffSet) {
         var builder = manager.getCriteriaBuilder();
         var query = builder.createQuery(DailySale.class);
         var root = query.from(Order.class);
 
         var predicates = new ArrayList<Predicate>();
 
+        var functionConvertTzDateCreation =
+                builder.function("convert_tz", Date.class, root.get("creationDate"),
+                        builder.literal("+00:00"), builder.literal(timeOffSet));
+
         var functionDateCreation =
-                builder.function("date", Date.class, root.get("creationDate"));
+                builder.function("date", Date.class, functionConvertTzDateCreation);
 
         var selection =
                 builder.construct(DailySale.class,
