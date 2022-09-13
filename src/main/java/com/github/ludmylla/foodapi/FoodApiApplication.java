@@ -1,6 +1,6 @@
 package com.github.ludmylla.foodapi;
 
-import com.github.ludmylla.foodapi.domain.repository.CustomJpaRepositoryImpl;
+import com.github.ludmylla.foodapi.infrastructure.repository.CustomJpaRepositoryImpl;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;

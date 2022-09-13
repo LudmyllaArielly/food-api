@@ -4,7 +4,6 @@ import com.github.ludmylla.foodapi.domain.model.Kitchen;
 import com.github.ludmylla.foodapi.domain.model.Restaurant;
 import com.github.ludmylla.foodapi.domain.repository.KitchenRepository;
 import com.github.ludmylla.foodapi.domain.repository.RestaurantRepository;
-import com.github.ludmylla.foodapi.domain.repository.spec.RestaurantSpecs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
