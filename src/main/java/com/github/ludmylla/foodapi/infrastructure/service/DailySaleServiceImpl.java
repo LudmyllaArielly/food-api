@@ -4,6 +4,7 @@ import com.github.ludmylla.foodapi.domain.filter.DailySaleFilter;
 import com.github.ludmylla.foodapi.domain.model.Order;
 import com.github.ludmylla.foodapi.domain.model.OrderStatus;
 import com.github.ludmylla.foodapi.domain.model.filter.DailySale;
+import com.github.ludmylla.foodapi.domain.service.DailySaleQueryService;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
