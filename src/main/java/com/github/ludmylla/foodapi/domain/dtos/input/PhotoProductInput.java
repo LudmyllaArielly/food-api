@@ -1,5 +1,6 @@
 package com.github.ludmylla.foodapi.domain.dtos.input;
 
+import com.github.ludmylla.foodapi.core.validation.FileSize;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,6 +13,7 @@ import javax.validation.constraints.NotNull;
 public class PhotoProductInput {
 
     @NotNull
+    @FileSize(max = "500KB")
     private MultipartFile file;
 
     @NotBlank
