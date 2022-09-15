@@ -1,4 +1,4 @@
-package com.github.ludmylla.foodapi.domain.service;
+package com.github.ludmylla.foodapi.infrastructure.service;
 
 import com.github.ludmylla.foodapi.domain.filter.DailySaleFilter;
 import com.github.ludmylla.foodapi.domain.model.filter.DailySale;
