@@ -96,7 +96,6 @@
 			<version>1.3.18</version>
 		</dependency>
 
-
 		<dependency>
 			<groupId>net.sf.jasperreports</groupId>
 			<artifactId>jasperreports</artifactId>
@@ -109,6 +108,11 @@
 			<version>${jasperreports.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk-s3</artifactId>
+			<version>1.12.303</version>
+		</dependency>
 
 
 	</dependencies>
