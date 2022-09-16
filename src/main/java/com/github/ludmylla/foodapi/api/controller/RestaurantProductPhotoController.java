@@ -30,7 +30,7 @@ public class RestaurantProductPhotoController {
 
     @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public PhotoProductModel updatePhoto(@PathVariable Long restaurantId, @PathVariable Long productId,
-                                         @RequestParam MultipartFile file, @Valid PhotoProductInput photoProductInput) throws IOException {
+                                         MultipartFile file, @Valid PhotoProductInput photoProductInput) throws IOException {
 
         Product product = productService.findByIdRestaurant(restaurantId, productId);
         MultipartFile multipartFile = photoProductInput.getFile();
