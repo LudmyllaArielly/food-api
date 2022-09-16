@@ -15,6 +15,7 @@ delete from user_team;
 delete from restaurant_user_responsible;
 delete from `order`;
 delete from items_order;
+delete from photo_product;
 
 set foreign_key_checks=1;
 
