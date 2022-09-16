@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/restaurants/{restaurantId}/products/{productId}/photo")
@@ -29,7 +30,7 @@ public class RestaurantProductPhotoController {
 
     @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public PhotoProductModel updatePhoto(@PathVariable Long restaurantId, @PathVariable Long productId,
-                                         @RequestParam MultipartFile file, @Valid PhotoProductInput photoProductInput){
+                                         @RequestParam MultipartFile file, @Valid PhotoProductInput photoProductInput) throws IOException {
 
         Product product = productService.findByIdRestaurant(restaurantId, productId);
         MultipartFile multipartFile = photoProductInput.getFile();
@@ -41,7 +42,7 @@ public class RestaurantProductPhotoController {
         photo.setSize(multipartFile.getSize());
         photo.setFileName(multipartFile.getOriginalFilename());
 
-        PhotoProduct photoSave = photoProductService.save(photo);
+        PhotoProduct photoSave = photoProductService.save(photo, file.getInputStream());
 
         return photoProductModelAssembler.toModel(photoSave);
 
