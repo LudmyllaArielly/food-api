@@ -2,6 +2,7 @@ package com.github.ludmylla.foodapi.domain.service;
 
 import com.github.ludmylla.foodapi.domain.model.PhotoProduct;
 import com.github.ludmylla.foodapi.domain.repository.ProductRepository;
+import com.github.ludmylla.foodapi.domain.service.exceptions.PhotoProductNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -60,6 +61,11 @@ public class PhotoProductService {
         String newFileName = photoStorageService.generateFileName(photoProduct.getFileName());
         photoProduct.setFileName(newFileName);
         return photoProduct;
+    }
+
+    public PhotoProduct findById(Long restaurantId, Long productId){
+        return productRepository.findPhotoById(restaurantId, productId)
+                .orElseThrow(() -> new PhotoProductNotFoundException(restaurantId, productId));
     }
 
 }

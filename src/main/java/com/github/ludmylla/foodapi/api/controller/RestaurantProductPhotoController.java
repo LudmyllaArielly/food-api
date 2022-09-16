@@ -9,6 +9,7 @@ import com.github.ludmylla.foodapi.domain.service.PhotoProductService;
 import com.github.ludmylla.foodapi.domain.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -46,5 +47,11 @@ public class RestaurantProductPhotoController {
 
         return photoProductModelAssembler.toModel(photoSave);
 
+    }
+
+    @GetMapping
+    public ResponseEntity<PhotoProductModel> findPhoto(@PathVariable Long restaurantId, @PathVariable Long productId){
+        PhotoProduct photoProduct = photoProductService.findById(restaurantId, productId);
+        return ResponseEntity.ok(photoProductModelAssembler.toModel(photoProduct));
     }
 }
