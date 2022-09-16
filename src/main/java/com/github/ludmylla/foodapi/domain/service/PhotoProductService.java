@@ -44,6 +44,21 @@ public class PhotoProductService {
         return photoProduct;
     }
 
+    public PhotoProduct findById(Long restaurantId, Long productId){
+        return productRepository.findPhotoById(restaurantId, productId)
+                .orElseThrow(() -> new PhotoProductNotFoundException(restaurantId, productId));
+    }
+
+    @Transactional
+    public void delete(Long restaurantId, Long productId) {
+        PhotoProduct photo = findById(restaurantId, productId);
+
+        productRepository.delete(photo);
+        productRepository.flush();
+
+        photoStorageService.remove(photo.getFileName());
+    }
+
     private PhotoProduct storage (PhotoProduct photoProduct, InputStream dataFile, String fileNameExisting ){
 
         PhotoStorageService.NewPhoto newPhoto = PhotoStorageService.NewPhoto
@@ -61,11 +76,6 @@ public class PhotoProductService {
         String newFileName = photoStorageService.generateFileName(photoProduct.getFileName());
         photoProduct.setFileName(newFileName);
         return photoProduct;
-    }
-
-    public PhotoProduct findById(Long restaurantId, Long productId){
-        return productRepository.findPhotoById(restaurantId, productId)
-                .orElseThrow(() -> new PhotoProductNotFoundException(restaurantId, productId));
     }
 
 }

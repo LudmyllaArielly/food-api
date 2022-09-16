@@ -83,6 +83,12 @@ public class RestaurantProductPhotoController {
         }
     }
 
+    @DeleteMapping
+    public ResponseEntity<Void> delete (@PathVariable Long restaurantId, @PathVariable  Long productId) {
+        photoProductService.delete(restaurantId, productId);
+        return ResponseEntity.noContent().build();
+    }
+
     private void checkCompatibilityMediaType(MediaType mediaTypePhoto, List<MediaType> mediaTypesAccepted) throws HttpMediaTypeNotAcceptableException {
         boolean compatible = mediaTypesAccepted.stream()
                 .anyMatch(mediaTypeAccepted -> mediaTypeAccepted.isCompatibleWith(mediaTypePhoto));
