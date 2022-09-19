@@ -11,6 +11,8 @@ import com.github.ludmylla.foodapi.domain.service.ProductService;
 import com.github.ludmylla.foodapi.domain.service.exceptions.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
@@ -19,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 @RestController
@@ -64,8 +65,8 @@ public class RestaurantProductPhotoController {
     }
 
     @GetMapping
-    public ResponseEntity<InputStreamResource> showPhoto(@PathVariable Long restaurantId, @PathVariable Long productId,
-                                                         @RequestHeader(name = "accept") String acceptHeader) throws HttpMediaTypeNotAcceptableException {
+    public ResponseEntity<?> showPhoto(@PathVariable Long restaurantId, @PathVariable Long productId,
+                                       @RequestHeader(name = "accept") String acceptHeader) throws HttpMediaTypeNotAcceptableException {
         try {
             PhotoProduct photoProduct = photoProductService.findById(restaurantId, productId);
 
@@ -73,18 +74,24 @@ public class RestaurantProductPhotoController {
             List<MediaType> mediaTypesAccepted = MediaType.parseMediaTypes(acceptHeader);
             checkCompatibilityMediaType(mediaTypePhoto, mediaTypesAccepted);
 
-            InputStream inputStream = photoStorageService.toRestore(photoProduct.getFileName());
+            PhotoStorageService.PhotoRestore photoRestore = photoStorageService.toRestore(photoProduct.getFileName());
 
-            return ResponseEntity.ok()
-                    .contentType(mediaTypePhoto)
-                    .body(new InputStreamResource(inputStream));
+            if (photoRestore.haveUrl()) {
+
+                return ResponseEntity.status(HttpStatus.FOUND)
+                        .header(HttpHeaders.CONTENT_LOCATION, photoRestore.getUrl()).build();
+            } else {
+                return ResponseEntity.ok()
+                        .contentType(mediaTypePhoto)
+                        .body(new InputStreamResource(photoRestore.getInputStream()));
+            }
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
     }
 
     @DeleteMapping
-    public ResponseEntity<Void> delete (@PathVariable Long restaurantId, @PathVariable  Long productId) {
+    public ResponseEntity<Void> delete(@PathVariable Long restaurantId, @PathVariable Long productId) {
         photoProductService.delete(restaurantId, productId);
         return ResponseEntity.noContent().build();
     }
@@ -93,7 +100,7 @@ public class RestaurantProductPhotoController {
         boolean compatible = mediaTypesAccepted.stream()
                 .anyMatch(mediaTypeAccepted -> mediaTypeAccepted.isCompatibleWith(mediaTypePhoto));
 
-        if(!compatible) {
+        if (!compatible) {
             throw new HttpMediaTypeNotAcceptableException(mediaTypesAccepted);
         }
     }

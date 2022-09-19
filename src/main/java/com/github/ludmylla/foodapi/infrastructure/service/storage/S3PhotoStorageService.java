@@ -10,7 +10,7 @@ import com.github.ludmylla.foodapi.domain.service.PhotoStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.InputStream;
+import java.net.URL;
 
 @Service
 public class S3PhotoStorageService implements PhotoStorageService {
@@ -45,10 +45,6 @@ public class S3PhotoStorageService implements PhotoStorageService {
         }
     }
 
-    private String getFilePath(String fileName) {
-        return String.format("%s/%s", storageProperties.getS3().getDirectoryPhotos(), fileName);
-    }
-
     @Override
     public void remove(String fileName) {
         String filePath = getFilePath(fileName);
@@ -60,7 +56,16 @@ public class S3PhotoStorageService implements PhotoStorageService {
     }
 
     @Override
-    public InputStream toRestore(String fileName) {
-        return null;
+    public PhotoRestore toRestore(String fileName) {
+        String filePath = getFilePath(fileName);
+
+        URL url = amazonS3
+                .getUrl(storageProperties.getS3().getBucket(), filePath);
+        return PhotoRestore.builder()
+                .url(url.toString()).build();
+    }
+
+    private String getFilePath(String fileName) {
+        return String.format("%s/%s", storageProperties.getS3().getDirectoryPhotos(), fileName);
     }
 }

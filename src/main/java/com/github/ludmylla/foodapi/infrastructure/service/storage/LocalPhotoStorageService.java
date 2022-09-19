@@ -3,11 +3,9 @@ package com.github.ludmylla.foodapi.infrastructure.service.storage;
 import com.github.ludmylla.foodapi.core.storage.StorageProperties;
 import com.github.ludmylla.foodapi.domain.service.PhotoStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -41,11 +39,16 @@ public class LocalPhotoStorageService implements PhotoStorageService {
     }
 
     @Override
-    public InputStream toRestore(String fileName) {
+    public PhotoRestore toRestore(String fileName) {
         try {
             Path filePath = getFilePath(fileName);
 
-            return Files.newInputStream(filePath);
+            PhotoRestore photoRestore = PhotoRestore.builder()
+                    .inputStream(Files.newInputStream(filePath))
+                    .build();
+
+
+            return photoRestore;
         } catch (Exception e) {
             throw new StorageException("Unable to recover the file.", e);
         }
