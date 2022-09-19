@@ -8,11 +8,10 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.github.ludmylla.foodapi.core.storage.StorageProperties;
 import com.github.ludmylla.foodapi.domain.service.PhotoStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.net.URL;
 
-@Service
+
 public class S3PhotoStorageService implements PhotoStorageService {
 
     @Autowired
