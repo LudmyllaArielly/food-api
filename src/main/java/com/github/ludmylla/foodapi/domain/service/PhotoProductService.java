@@ -64,6 +64,7 @@ public class PhotoProductService {
         PhotoStorageService.NewPhoto newPhoto = PhotoStorageService.NewPhoto
                 .builder()
                 .fileName(photoProduct.getFileName())
+                .contentType(photoProduct.getContentType())
                 .inputStream(dataFile)
                 .build();
 

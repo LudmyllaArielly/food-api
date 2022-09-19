@@ -1,7 +1,8 @@
 package com.github.ludmylla.foodapi.infrastructure.service.storage;
 
+import com.github.ludmylla.foodapi.core.storage.StorageProperties;
 import com.github.ludmylla.foodapi.domain.service.PhotoStorageService;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 
@@ -10,11 +11,11 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-@Service
+//@Service
 public class LocalPhotoStorageService implements PhotoStorageService {
 
-    @Value("${food.api.storage.local.photos}")
-    private Path localPhotos;
+    @Autowired
+    private StorageProperties storageProperties;
 
     @Override
     public void store(NewPhoto newPhoto) {
@@ -51,6 +52,6 @@ public class LocalPhotoStorageService implements PhotoStorageService {
     }
 
     private Path getFilePath(String fileName) {
-        return localPhotos.resolve(Path.of(fileName));
+        return storageProperties.getLocal().getFolderPhotos().resolve(Path.of(fileName));
     }
 }
