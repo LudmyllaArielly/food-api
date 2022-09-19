@@ -41,7 +41,7 @@ public class RestaurantProductPhotoController {
 
     @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public PhotoProductModel updatePhoto(@PathVariable Long restaurantId, @PathVariable Long productId,
-                                         MultipartFile file, @Valid PhotoProductInput photoProductInput) throws IOException {
+                                         @Valid PhotoProductInput photoProductInput) throws IOException {
 
         Product product = productService.findByIdRestaurant(restaurantId, productId);
         MultipartFile multipartFile = photoProductInput.getFile();
@@ -53,7 +53,7 @@ public class RestaurantProductPhotoController {
         photo.setSize(multipartFile.getSize());
         photo.setFileName(multipartFile.getOriginalFilename());
 
-        PhotoProduct photoSave = photoProductService.save(photo, file.getInputStream());
+        PhotoProduct photoSave = photoProductService.save(photo, multipartFile.getInputStream());
 
         return photoProductModelAssembler.toModel(photoSave);
     }
