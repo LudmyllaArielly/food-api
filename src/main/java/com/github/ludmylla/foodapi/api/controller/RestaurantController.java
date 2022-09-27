@@ -6,16 +6,15 @@ import com.github.ludmylla.foodapi.api.assembler.RestaurantModelAssembler;
 import com.github.ludmylla.foodapi.domain.dtos.RestaurantModel;
 import com.github.ludmylla.foodapi.domain.dtos.input.RestaurantInputModel;
 import com.github.ludmylla.foodapi.domain.dtos.view.RestaurantView;
+import com.github.ludmylla.foodapi.domain.model.Restaurant;
+import com.github.ludmylla.foodapi.domain.service.RestaurantService;
 import com.github.ludmylla.foodapi.domain.service.exceptions.BusinessException;
 import com.github.ludmylla.foodapi.domain.service.exceptions.CityNotFoundException;
 import com.github.ludmylla.foodapi.domain.service.exceptions.KitchenNotFoundException;
-import com.github.ludmylla.foodapi.domain.model.Restaurant;
-import com.github.ludmylla.foodapi.domain.service.RestaurantService;
 import com.github.ludmylla.foodapi.domain.service.exceptions.RestaurantNofFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
