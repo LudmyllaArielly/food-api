@@ -50,8 +50,11 @@ insert into team(id, name) values (1, 'Admin'), (2, 'User'), (3, 'recorder');
 
 insert into team_permission(team_id, permission_id) values(1,1), (1,2), (1,3), (2,1), (3, 1), (3,2);
 
-insert into user (id, name, email, password, registration_date) values (1, "Maria", "maria@xyz.com", "333", utc_timestamp);
-insert into user (id, name, email, password, registration_date) values (2, "Jones", "jones@xyz.com", "444", utc_timestamp);
+insert into user (id, name, email, password, registration_date) values (1, "Maria", "ludmay4@gmail.com", "333", utc_timestamp);
+insert into user (id, name, email, password, registration_date) values (2, "Jonas", "jonas@gmail.com", "444", utc_timestamp);
+insert into user (id, name, email, password, registration_date) values (3, "Lucas", "lucas@xyz.com", "785", utc_timestamp);
+insert into user (id, name, email, password, registration_date) values (4, "Anna", "anna@xyz.com", "852", utc_timestamp);
+
 
 insert into user_team(user_id, team_id) values (1,1), (2,2);
 
@@ -109,7 +112,7 @@ insert into `order` (id, code, subtotal, freight_rate, price_total, status, crea
 
 insert into items_order (id, quantity, unit_price, total_price, observation, product_id, order_id) values (7, 2, 7.00, 14.00, 'Loren', 4, 4);
 
-insert into `order` (id, code, subtotal, freight_rate, price_total, status, creation_date, confirmation_date, user_client_id, form_of_payment_id, restaurant_id, address_zip_code, address_public_place, address_number, address_complement, address_district, address_city_id) values (5, '710412ff-7a4d-4c16-9cca-23740dba9921', 17.98, 5.00, 22.98, 'CONFIRMED', "2022-09-11 10:00:00", "2022-09-11 11:30:00", 1, 1, 1, '78963222', 'Rua 785', '12', 'Apt. 74', 'Sul 9', 1);
+insert into `order` (id, code, subtotal, freight_rate, price_total, status, creation_date, user_client_id, form_of_payment_id, restaurant_id, address_zip_code, address_public_place, address_number, address_complement, address_district, address_city_id) values (5, '710412ff-7a4d-4c16-9cca-23740dba9921', 17.98, 5.00, 22.98, 'CREATED', "2022-09-11 10:00:00", 1, 1, 1, '78963222', 'Rua 785', '12', 'Apt. 74', 'Sul 9', 1);
 
 insert into items_order (id, quantity, unit_price, total_price, observation, product_id, order_id) values (8, 1, 7.99, 7.99, 'Loren', 1, 5);
 insert into items_order (id, quantity, unit_price, total_price, observation, product_id, order_id) values (9, 1, 9.99, 9.99, 'Loren', 2, 5);
