@@ -2,8 +2,10 @@ package com.github.ludmylla.foodapi.domain.service;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Singular;
 
+import java.util.Map;
 import java.util.Set;
 
 public interface SendingEmailService {
@@ -18,8 +20,14 @@ public interface SendingEmailService {
         @Singular
         private Set<String> addressees;
 
+        @NonNull
         private String topic;
+
+        @NonNull
         private String body;
+
+        @Singular("variable")
+        private Map<String, Object> variables;
 
     }
 }
