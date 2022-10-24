@@ -51,9 +51,9 @@ insert into team(id, name) values (1, 'Admin'), (2, 'User'), (3, 'recorder');
 insert into team_permission(team_id, permission_id) values(1,1), (1,2), (1,3), (2,1), (3, 1), (3,2);
 
 insert into user (id, name, email, password, registration_date) values (1, "Maria", "ludmay4@gmail.com", "333", utc_timestamp);
-insert into user (id, name, email, password, registration_date) values (2, "Jonas", "jonas@gmail.com", "444", utc_timestamp);
-insert into user (id, name, email, password, registration_date) values (3, "Lucas", "lucas@xyz.com", "785", utc_timestamp);
-insert into user (id, name, email, password, registration_date) values (4, "Anna", "anna@xyz.com", "852", utc_timestamp);
+insert into user (id, name, email, password, registration_date) values (2, "Jonas", "jonas+ludmay4@gmail.com", "444", utc_timestamp);
+insert into user (id, name, email, password, registration_date) values (3, "Lucas", "lucas+ludmay4@gmail.com", "785", utc_timestamp);
+insert into user (id, name, email, password, registration_date) values (4, "Anna", "anna+ludmay4@gmail.com", "852", utc_timestamp);
 
 
 insert into user_team(user_id, team_id) values (1,1), (2,2);
