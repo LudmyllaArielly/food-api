@@ -27,7 +27,8 @@ public class StatusChangeOrderService {
         var message =
                 SendingEmailService.Message.builder()
                         .topic(order.getRestaurant().getName() + "- Order confirm")
-                        .body("The code order <strong> " + order.getCode() + "</strong> has been confirmed!")
+                        .body("order-confirm.html")
+                        .variable("order", order)
                         .addressee(order.getUser().getEmail())
                         .build();
 
