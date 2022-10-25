@@ -1,12 +1,10 @@
 package com.github.ludmylla.foodapi.domain.service;
 
 import com.github.ludmylla.foodapi.domain.model.Order;
+import com.github.ludmylla.foodapi.domain.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Service
 public class StatusChangeOrderService {
@@ -15,40 +13,30 @@ public class StatusChangeOrderService {
     private OrderService orderService;
 
     @Autowired
-    private SendingEmailService sendingEmailService;
+    private OrderRepository orderRepository;
 
     @Transactional
-    public void confirm(String codeId){
+    public void confirm(String codeId) {
         Order order = verifyIfOrderExist(codeId);
         order.confirmOrder();
 
-        Set<String> addressees = new HashSet<>();
-
-        var message =
-                SendingEmailService.Message.builder()
-                        .topic(order.getRestaurant().getName() + "- Order confirm")
-                        .body("order-confirm.html")
-                        .variable("order", order)
-                        .addressee(order.getUser().getEmail())
-                        .build();
-
-        sendingEmailService.send(message);
+        orderRepository.save(order);
     }
 
     @Transactional
-    public void cancel(String codeId){
+    public void cancel(String codeId) {
         Order order = verifyIfOrderExist(codeId);
         order.cancelOrder();
     }
 
     @Transactional
-    public void delivery(String codeId){
+    public void delivery(String codeId) {
         Order order = verifyIfOrderExist(codeId);
         order.deliveryOrder();
     }
 
-    private Order verifyIfOrderExist(String codeId){
-       return orderService.findById(codeId);
+    private Order verifyIfOrderExist(String codeId) {
+        return orderService.findById(codeId);
     }
 
 }

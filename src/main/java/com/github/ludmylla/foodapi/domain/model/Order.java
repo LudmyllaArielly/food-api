@@ -1,9 +1,11 @@
 package com.github.ludmylla.foodapi.domain.model;
 
+import com.github.ludmylla.foodapi.domain.event.ConfirmedOrderEvent;
 import com.github.ludmylla.foodapi.domain.service.exceptions.BusinessException;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.domain.AbstractAggregateRoot;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -12,11 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Data
 @Entity
 @Table(name = "`order`")
-public class Order {
+public class Order extends AbstractAggregateRoot<Order> {
 
     @EqualsAndHashCode.Include
     @Id
@@ -69,6 +71,8 @@ public class Order {
     public void confirmOrder(){
         setStatus(OrderStatus.CONFIRMED);
         setConfirmationDate(OffsetDateTime.now());
+
+        registerEvent(new ConfirmedOrderEvent(this));
     }
 
     public void deliveryOrder(){
