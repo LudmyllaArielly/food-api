@@ -1,5 +1,6 @@
 package com.github.ludmylla.foodapi.domain.model;
 
+import com.github.ludmylla.foodapi.domain.event.CancellationOrderEvent;
 import com.github.ludmylla.foodapi.domain.event.ConfirmedOrderEvent;
 import com.github.ludmylla.foodapi.domain.service.exceptions.BusinessException;
 import lombok.Data;
@@ -83,6 +84,8 @@ public class Order extends AbstractAggregateRoot<Order> {
     public void cancelOrder(){
         setStatus(OrderStatus.CANCELED);
         setCancellationDate(OffsetDateTime.now());
+
+        registerEvent(new CancellationOrderEvent(this));
     }
 
     private void setStatus(OrderStatus newStatus){

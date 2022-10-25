@@ -27,6 +27,8 @@ public class StatusChangeOrderService {
     public void cancel(String codeId) {
         Order order = verifyIfOrderExist(codeId);
         order.cancelOrder();
+
+        orderRepository.save(order);
     }
 
     @Transactional
