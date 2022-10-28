@@ -1,6 +1,6 @@
 package com.github.ludmylla.foodapi.domain.listener;
 
-import com.github.ludmylla.foodapi.domain.event.ConfirmedOrderEvent;
+import com.github.ludmylla.foodapi.domain.event.CancellationOrderEvent;
 import com.github.ludmylla.foodapi.domain.model.Order;
 import com.github.ludmylla.foodapi.domain.service.SendingEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ public class CancellationOrderNotificationListener {
     private SendingEmailService sendingEmailService;
 
     @TransactionalEventListener
-    public void whenCancelOrder(ConfirmedOrderEvent event) {
+    public void whenCancelOrder(CancellationOrderEvent event) {
 
         Order order = event.getOrder();
         var message =
